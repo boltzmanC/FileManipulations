@@ -21,10 +21,11 @@ namespace FileManipulations
             int bufferheight = 600;
             Console.SetBufferSize(bufferwidth, bufferheight);
 
-            //DeleteDelmitedValue();
+
+            // GO
 
             FileFormatCheckerFixer();
-            //FileInfo();
+
 
             // Manual running-------------
 
@@ -176,78 +177,78 @@ namespace FileManipulations
                 {
                     // File Formatting.
                     case "1":
-                        StringStrip();
+                        FunctionTools.StringStrip();
                         break;
                     case "2":
-                        VerifyLineLength();
+                        FunctionTools.VerifyLineLength();
                         break;
                     case "3":
-                        TrimWhitespace();
+                        FunctionTools.TrimWhitespace();
                         break;
                     case "4":
-                        ChangeDelimeter();
+                        FunctionTools.ChangeDelimeter();
                         break;
                     case "5":
-                        CombineTwoColumns();
+                        FunctionTools.CombineTwoColumns();
                         break;
 
                     // File Manipulation.
                     case "6":
-                        CombineFiles();
+                        FileFormatCheckerFixers.CombineFiles();
                         break;
                     case "7":
-                        CopyFile();
+                        FileFormatCheckerFixers.CopyFile();
                         break;
                     case "8":
-                        UniqueValueCheck();
+                        FileFormatCheckerFixers.UniqueValueCheck();
                         break;
                     case "9":
-                        VlookupAppendColumn();
+                        FileFormatCheckerFixers.VlookupAppendColumn();
                         break;
                     case "10":
-                        VLookupAppendColumnRows();
+                        FileFormatCheckerFixers.VLookupAppendColumnRows();
                         break;
                     case "11":
-                        AddStringToColumnValues();
+                        FileFormatCheckerFixers.AddStringToColumnValues();
                         break;
                     case "12":
-                        AddStringAsNewColumnValue();
+                        FileFormatCheckerFixers.AddStringAsNewColumnValue();
                         break;
                     case "13":
-                        RemoveDataFromColumn();
+                        FileFormatCheckerFixers.RemoveDataFromColumn();
                         break;
 
                     //Pull Data From File.
                     case "14":
-                        GetSubsetOfRecords();
+                        FileFormatCheckerFixers.GetSubsetOfRecords();
                         break;
                     case "15":
-                        BreakOneFileIntoMany();
+                        FileFormatCheckerFixers.BreakOneFileIntoMany();
                         break;
                     case "16":
-                        CopyColumnsWithValueToNewFile();
+                        FileFormatCheckerFixers.CopyColumnsWithValueToNewFile();
                         break;
                     case "17":
-                        CopyColumnsToNewFile();
+                        FileFormatCheckerFixers.CopyColumnsToNewFile();
                         break;
                     case "18":
-                        PullBlankEmptyOrZeroValueRecords();
+                        FileFormatCheckerFixers.PullBlankEmptyOrZeroValueRecords();
                         break;
                     case "19":
-                        PullRandomSubsetofLengthX(); // not really working.
+                        FileFormatCheckerFixers.PullRandomSubsetofLengthX(); // not really working.
                         break;
                     case "20":
-                        PullRecordsWithValueXInColumnY();
+                        FileFormatCheckerFixers.PullRecordsWithValueXInColumnY();
                         break;
                     case "21":
-                        PullRecordsWithValueInColumn_s();
+                        FileFormatCheckerFixers.PullRecordsWithValueInColumn_s();
                         break;
                     case "22":
-                        PullRecordsWithORListofStringorChars();
+                        FileFormatCheckerFixers.PullRecordsWithORListofStringorChars();
                         break;
 
                     case "23":
-                        TestColumnNamesFromDefinitionFile();
+                        FileFormatCheckerFixers.TestColumnNamesFromDefinitionFile();
                         break;
 
                     //end

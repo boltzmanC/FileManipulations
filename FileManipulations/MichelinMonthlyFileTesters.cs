@@ -16,7 +16,7 @@ namespace FileManipulations
         // Michelin Monthly File Testing
         //****************************************************************************************************************************************************
         //****************************************************************************************************************************************************
-        static void MichelinMonthlyFileCleaner()
+        public static void MichelinMonthlyFileCleaner()
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine();
@@ -56,7 +56,7 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinTestUSMonthlyFileFormats() // michelin monthly file formatting.
+        public static void MichelinTestUSMonthlyFileFormats() // michelin monthly file formatting.
         {
 
             // EDIT NOTES:
@@ -76,7 +76,7 @@ namespace FileManipulations
             Console.WriteLine("Please verify that ALL files are TAB DELIMITED.");
             Console.ResetColor();
 
-            string path = GetDesktopDirectory() + @"\michelin_us_results";
+            string path = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results";
 
             if (!Directory.Exists(path))
             {
@@ -139,14 +139,14 @@ namespace FileManipulations
             }
         }
         // individual tests.
-        static public void MichelinTestMonthlyFilesADD()
+        public static void MichelinTestMonthlyFilesADD()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the ADD file.");
-            string file = GetAFile();
-            string filename = GetFileNameWithoutExtension(file);
-            char del = GetDelimiter();
+            string file = FunctionTools.GetAFile();
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            char del = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month first 3 letters(ex. JAN): ");
             string month = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -154,7 +154,7 @@ namespace FileManipulations
 
             month = month + year;
 
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
 
             // error storage
             List<string> missingcolumnlist = new List<string>(); //save the list.
@@ -189,7 +189,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, del, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, del, s));
                         }
                         else
                         {
@@ -210,9 +210,9 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int uniquecustidcolumn = ColumnIndex(header, del, "Unique Customer Id");
-                    int yearcolumn = ColumnIndex(header, del, "Year");
-                    int monthcolumn = ColumnIndex(header, del, "Month");
+                    int uniquecustidcolumn = FunctionTools.ColumnIndex(header, del, "Unique Customer Id");
+                    int yearcolumn = FunctionTools.ColumnIndex(header, del, "Year");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, del, "Month");
 
                     //write new header -> with new column headers that match the table to be reloaded.
                     string newheader = string.Join(del.ToString(), newcolumns);
@@ -306,14 +306,14 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinTestMonthlyFilesDIR()
+        public static void MichelinTestMonthlyFilesDIR()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the DIR file.");
-            string file = GetAFile();
-            string filename = GetFileNameWithoutExtension(file);
-            char del = GetDelimiter();
+            string file = FunctionTools.GetAFile();
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            char del = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month first 3 letters(ex. JAN): ");
             string month = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -321,7 +321,7 @@ namespace FileManipulations
 
             month = month + year;
 
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
 
             // error storage
             List<string> missingcolumnlist = new List<string>(); //save the list.
@@ -354,7 +354,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, del, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, del, s));
                         }
                         else
                         {
@@ -375,15 +375,15 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, del, "Month".ToUpper());
-                    int yearcolumn = ColumnIndex(header, del, "Year".ToUpper());
+                    int monthcolumn = FunctionTools.ColumnIndex(header, del, "Month".ToUpper());
+                    int yearcolumn = FunctionTools.ColumnIndex(header, del, "Year".ToUpper());
 
-                    int billcustomerid = ColumnIndex(header, del, "Bill To Customer Id".ToUpper());
-                    int billcustomerchannelid = ColumnIndex(header, del, "Bill To Cust Chnl Id".ToUpper());
-                    int shiptonumberid = ColumnIndex(header, del, "Ship To Number #".ToUpper());
-                    int shiptocustomerchnlid = ColumnIndex(header, del, "Ship To Cust Chnl Id".ToUpper());
-                    int narunits = ColumnIndex(header, del, "Nar Units".ToUpper());
-                    int selloutunits = ColumnIndex(header, del, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                    int billcustomerid = FunctionTools.ColumnIndex(header, del, "Bill To Customer Id".ToUpper());
+                    int billcustomerchannelid = FunctionTools.ColumnIndex(header, del, "Bill To Cust Chnl Id".ToUpper());
+                    int shiptonumberid = FunctionTools.ColumnIndex(header, del, "Ship To Number #".ToUpper());
+                    int shiptocustomerchnlid = FunctionTools.ColumnIndex(header, del, "Ship To Cust Chnl Id".ToUpper());
+                    int narunits = FunctionTools.ColumnIndex(header, del, "Nar Units".ToUpper());
+                    int selloutunits = FunctionTools.ColumnIndex(header, del, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
 
                     List<int> numbercolumnslist = new List<int> { billcustomerchannelid, billcustomerid, shiptocustomerchnlid, shiptonumberid, narunits, selloutunits };
 
@@ -484,14 +484,14 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinTestMonthlyFilesGAPPrice()
+        public static void MichelinTestMonthlyFilesGAPPrice()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the GAP PRICE file.");
-            string file = GetAFile();
-            string filename = GetFileNameWithoutExtension(file);
-            char del = GetDelimiter();
+            string file = FunctionTools.GetAFile();
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            char del = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string month = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -499,7 +499,7 @@ namespace FileManipulations
 
             month = year + month;
 
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
 
             // error storage
             List<string> missingcolumnlist = new List<string>(); //save the list.
@@ -530,7 +530,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, del, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, del, s));
                         }
                         else
                         {
@@ -552,11 +552,11 @@ namespace FileManipulations
 
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, del, "Month".ToUpper());
+                    int monthcolumn = FunctionTools.ColumnIndex(header, del, "Month".ToUpper());
 
                     //numbertests.
-                    int avgnetnetprice = ColumnIndex(header, del, "AVG NET NET PRICE AMT".ToUpper());
-                    int avginvcprice = ColumnIndex(header, del, "AVG INVC PRICE AMT".ToUpper());
+                    int avgnetnetprice = FunctionTools.ColumnIndex(header, del, "AVG NET NET PRICE AMT".ToUpper());
+                    int avginvcprice = FunctionTools.ColumnIndex(header, del, "AVG INVC PRICE AMT".ToUpper());
                     List<int> numbercolumnslist = new List<int> { avginvcprice, avgnetnetprice };
 
                     //write new header -> with new column headers that match the table to be reloaded.
@@ -650,14 +650,14 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinTestMonthlyFilesOM()
+        public static void MichelinTestMonthlyFilesOM()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the OM file.");
-            string file = GetAFile();
-            string filename = GetFileNameWithoutExtension(file);
-            char del = GetDelimiter();
+            string file = FunctionTools.GetAFile();
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            char del = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month first 3 letters(ex. JAN): ");
             string month = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -665,7 +665,7 @@ namespace FileManipulations
 
             month = month + year;
 
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
 
             // error storage
             List<string> missingcolumnlist = new List<string>(); //save the list.
@@ -697,7 +697,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, del, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, del, s));
                         }
                         else
                         {
@@ -718,9 +718,9 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int uniquecustidcolumn = ColumnIndex(header, del, "Unique Customer Id");
-                    int yearcolumn = ColumnIndex(header, del, "Year");
-                    int monthcolumn = ColumnIndex(header, del, "Month");
+                    int uniquecustidcolumn = FunctionTools.ColumnIndex(header, del, "Unique Customer Id");
+                    int yearcolumn = FunctionTools.ColumnIndex(header, del, "Year");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, del, "Month");
 
 
                     //write new header -> with new column headers that match the table to be reloaded.
@@ -813,14 +813,14 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinDealerTireLAMMonthly()
+        public static void MichelinDealerTireLAMMonthly()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the US Dealer Tire Lam Batch file.");
-            string file = GetAFile();
-            string filename = GetFileNameWithoutExtension(file);
-            char del = GetDelimiter();
+            string file = FunctionTools.GetAFile();
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            char del = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month first 3 letters(ex. JAN): ");
             string month = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -828,7 +828,7 @@ namespace FileManipulations
 
             month = month + year;
 
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_" + month + "_good_columns.txt";
 
             // error storage
             List<string> missingcolumnlist = new List<string>(); //save the list.
@@ -860,7 +860,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, del, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, del, s));
                         }
                         else
                         {
@@ -882,8 +882,8 @@ namespace FileManipulations
 
                     //Column being checked indexes.
                     //int uniquecustidcolumn = ColumnIndex(usdtlamheader, usdtlamdel, "Plan Channel Member Group ID");
-                    int yearcolumn = ColumnIndex(header, del, "Year");
-                    int monthcolumn = ColumnIndex(header, del, "Month");
+                    int yearcolumn = FunctionTools.ColumnIndex(header, del, "Year");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, del, "Month");
 
                     //write new header -> with new column headers that match the table to be reloaded.
                     string newheader = string.Join(del.ToString(), newcolumns);
@@ -967,7 +967,7 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinTestAndCombineMonthlyGapFiles()
+        public static void MichelinTestAndCombineMonthlyGapFiles()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
@@ -975,8 +975,8 @@ namespace FileManipulations
             Console.WriteLine();
 
             Console.WriteLine("Please enter the US Dealer Tire GAP Monthly Batch File.");
-            string gapbatchfile = GetAFile();
-            char gapbatchdel = GetDelimiter();
+            string gapbatchfile = FunctionTools.GetAFile();
+            char gapbatchdel = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month first 3 letters(ex. JAN): ");
             string gapbatchmonth = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the file Month number (ex. 01): ");
@@ -987,8 +987,8 @@ namespace FileManipulations
             Console.WriteLine();
             Console.WriteLine("------------------------------------------------------------------------------------");
             Console.WriteLine("Please enter the GAP US TCAR PS Extract File.");
-            string gaptcarfile = GetAFile();
-            char gaptcardel = GetDelimiter();
+            string gaptcarfile = FunctionTools.GetAFile();
+            char gaptcardel = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string gaptcarmonth = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -997,15 +997,15 @@ namespace FileManipulations
             Console.WriteLine();
             Console.WriteLine("------------------------------------------------------------------------------------");
             Console.WriteLine("Please enter the MSPN ST AAD US OMA For ZONE LAM File.");
-            string mspnfile = GetAFile();
-            char mspndel = GetDelimiter();
+            string mspnfile = FunctionTools.GetAFile();
+            char mspndel = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string mspnmonth = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
             string mspnyear = Console.ReadLine().Trim().ToUpper();
 
             //new file
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + "USGAPFILE_" + gapbatchmonth + "_good_columns.txt";
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + "USGAPFILE_" + gapbatchmonth + "_good_columns.txt";
             char passedtestfiledel = '|';
 
             // platform table column order. output file will have these columns.
@@ -1050,7 +1050,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(column))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, gapbatchdel, column));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, gapbatchdel, column));
                         }
                         else
                         {
@@ -1073,7 +1073,7 @@ namespace FileManipulations
                     if (columnindexes.Count != expectedfilecolumns.Length)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", GetFileNameWithoutExtension(gapbatchfile));
+                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", FunctionTools.GetFileNameWithoutExtension(gapbatchfile));
                         Console.WriteLine("************************************************************************************");
                         Console.WriteLine("Expected Columns: ");
                         foreach (var column in expectedfilecolumns)
@@ -1087,7 +1087,7 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, gapbatchdel, "Month");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, gapbatchdel, "Month");
 
                     // read rest of file and check columns.
                     string line = string.Empty;
@@ -1193,7 +1193,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, gaptcardel, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, gaptcardel, s));
                         }
                         else
                         {
@@ -1216,7 +1216,7 @@ namespace FileManipulations
                     if (columnindexes.Count != expectedfilecolumns.Length)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", GetFileNameWithoutExtension(gaptcarfile));
+                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", FunctionTools.GetFileNameWithoutExtension(gaptcarfile));
                         Console.WriteLine("************************************************************************************");
                         Console.WriteLine("Expected Columns: ");
                         foreach (var column in expectedfilecolumns)
@@ -1229,13 +1229,13 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, gaptcardel, "Month");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, gaptcardel, "Month");
 
                     //number test.
-                    int etslsunitscolumn = ColumnIndex(header, gaptcardel, "ET SLS UNITS w TCI Bibx".ToUpper());
-                    int selloutunitscolumn = ColumnIndex(header, gaptcardel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
-                    int netinvcunitscolumn = ColumnIndex(header, gaptcardel, "NET INVC UNITS".ToUpper());
-                    int bibexpresscolumn = ColumnIndex(header, gaptcardel, "BIB EXPRESS TS UNITS".ToUpper());
+                    int etslsunitscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "ET SLS UNITS w TCI Bibx".ToUpper());
+                    int selloutunitscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                    int netinvcunitscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "NET INVC UNITS".ToUpper());
+                    int bibexpresscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "BIB EXPRESS TS UNITS".ToUpper());
 
                     List<int> numbercolumnslist = new List<int> { etslsunitscolumn, selloutunitscolumn, netinvcunitscolumn, bibexpresscolumn };
 
@@ -1350,7 +1350,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, mspndel, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, mspndel, s));
                         }
                         else
                         {
@@ -1373,7 +1373,7 @@ namespace FileManipulations
                     if (columnindexes.Count != expectedfilecolumns.Length)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", GetFileNameWithoutExtension(mspnfile));
+                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", FunctionTools.GetFileNameWithoutExtension(mspnfile));
                         Console.WriteLine("************************************************************************************");
                         Console.WriteLine("Expected Columns: ");
                         foreach (var column in expectedfilecolumns)
@@ -1386,7 +1386,7 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, mspndel, "Month");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, mspndel, "Month");
 
                     // read rest of file and check columns.
                     string line = string.Empty;
@@ -1459,7 +1459,7 @@ namespace FileManipulations
             }
         }
 
-        static public void MonthlyKickoutFile()
+        public static void MonthlyKickoutFile()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
@@ -1473,8 +1473,8 @@ namespace FileManipulations
 
             Console.WriteLine("Processing..");
 
-            string newkickoutmonthfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\KickOutMonth_updated.txt";
-            string path = GetDesktopDirectory() + @"\michelin_us_results";
+            string newkickoutmonthfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\KickOutMonth_updated.txt";
+            string path = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results";
 
             if (!Directory.Exists(path))
             {
@@ -1553,7 +1553,7 @@ namespace FileManipulations
 
         }
 
-        static public void MichelinMonthlyFilesTestReport(string file, string testedoutfile, List<string> missingcolumnlist, HashSet<string> unmatchedfilecolumnlist, Dictionary<int, List<string>> failedrecordsdict, int errorlinecount, int errordelimitercount, int blankvaluesadded)
+        public static void MichelinMonthlyFilesTestReport(string file, string testedoutfile, List<string> missingcolumnlist, HashSet<string> unmatchedfilecolumnlist, Dictionary<int, List<string>> failedrecordsdict, int errorlinecount, int errordelimitercount, int blankvaluesadded)
         {
             // error storage
             //List<string> missingcolumnlist = new List<string>(); //save the list.
@@ -1566,7 +1566,7 @@ namespace FileManipulations
             // test results
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("{0} - Test Results:", GetFileNameWithoutExtension(file));
+            Console.WriteLine("{0} - Test Results:", FunctionTools.GetFileNameWithoutExtension(file));
             Console.ResetColor();
 
             if (errordelimitercount > 0)
@@ -1587,7 +1587,7 @@ namespace FileManipulations
 
             if (failedrecordsdict.Count != 0 || missingcolumnlist.Count != 0)
             {
-                string failoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + GetFileNameWithoutExtension(file) + "_failreport.txt";
+                string failoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_failreport.txt";
 
                 using (StreamWriter failreportfile = new StreamWriter(failoutfile))
                 {
@@ -1649,7 +1649,7 @@ namespace FileManipulations
         }
 
         // Michelin Monthly File Testing Canada
-        static public void MichelinCanadaTestMontlyFileFormats()
+        public static void MichelinCanadaTestMontlyFileFormats()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
@@ -1662,7 +1662,7 @@ namespace FileManipulations
             Console.WriteLine("Please verify that ALL files are TAB DELIMITED.");
             Console.ResetColor();
 
-            string path = GetDesktopDirectory() + @"\michelin_canada_results\";
+            string path = FunctionTools.GetDesktopDirectory() + @"\michelin_canada_results\";
 
             if (!Directory.Exists(path))
             {
@@ -1705,14 +1705,14 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinCanadaTestMonthlyFilesGAPPrice()
+        public static void MichelinCanadaTestMonthlyFilesGAPPrice()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the GAP Price CA TCAR file.");
-            string file = GetAFile();
-            string filename = GetFileNameWithoutExtension(file);
-            char del = GetDelimiter();
+            string file = FunctionTools.GetAFile();
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            char del = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string month = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -1720,7 +1720,7 @@ namespace FileManipulations
 
             month = year + month;
 
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + filename + "_" + month + "_good_columns.txt";
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + filename + "_" + month + "_good_columns.txt";
 
             // error storage
             List<string> missingcolumnlist = new List<string>(); //save the list.
@@ -1754,7 +1754,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, del, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, del, s));
                         }
                         else
                         {
@@ -1775,11 +1775,11 @@ namespace FileManipulations
                     }
 
                     //Column indexes.
-                    int monthcolumn = ColumnIndex(header, del, "Month");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, del, "Month");
 
                     //numbertests.
-                    int number1 = ColumnIndex(header, del, "CA AVG INVC PRICE AMT".ToUpper());
-                    int number2 = ColumnIndex(header, del, "CA AVG NET NET PRICE AMT".ToUpper());
+                    int number1 = FunctionTools.ColumnIndex(header, del, "CA AVG INVC PRICE AMT".ToUpper());
+                    int number2 = FunctionTools.ColumnIndex(header, del, "CA AVG NET NET PRICE AMT".ToUpper());
                     List<int> numbercolumnslist = new List<int> { number1, number2 };
 
                     //write new header -> with new column headers that match the table to be reloaded.
@@ -1882,14 +1882,14 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinCanadaTestAndCombineGapFiles()
+        public static void MichelinCanadaTestAndCombineGapFiles()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the MSPN ST  AAD CA OMA For Zone LAM file.");
-            string mspnfile = GetAFile();
+            string mspnfile = FunctionTools.GetAFile();
 
-            char mspndel = GetDelimiter();
+            char mspndel = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string mspnmonth = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -1898,16 +1898,16 @@ namespace FileManipulations
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the GAP CA TCAR PS Extract file.");
-            string gapfile = GetAFile();
+            string gapfile = FunctionTools.GetAFile();
 
-            char gapdel = GetDelimiter();
+            char gapdel = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string gapmonth = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
             string gapyear = Console.ReadLine().Trim().ToUpper();
 
             //new file
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + "CanadaGAPFILE_" + gapmonth + "_good_columns.txt";
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + "CanadaGAPFILE_" + gapmonth + "_good_columns.txt";
             char passedtestfiledel = '|';
 
             // platform table column order. output file will have these columns.
@@ -1951,7 +1951,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, mspndel, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, mspndel, s));
                         }
                         else
                         {
@@ -1974,7 +1974,7 @@ namespace FileManipulations
                     if (columnindexes.Count != expectedfilecolumns.Length)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", GetFileNameWithoutExtension(mspnfile));
+                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", FunctionTools.GetFileNameWithoutExtension(mspnfile));
                         Console.WriteLine("************************************************************************************");
                         Console.ResetColor();
 
@@ -1982,10 +1982,10 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, mspndel, "Month");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, mspndel, "Month");
 
                     //numbertests.
-                    int selloutunitscolumn = ColumnIndex(header, mspndel, "SELLOUT UNITS".ToUpper());
+                    int selloutunitscolumn = FunctionTools.ColumnIndex(header, mspndel, "SELLOUT UNITS".ToUpper());
                     List<int> numbercolumnslist = new List<int> { selloutunitscolumn };
 
                     // read rest of file and check columns.
@@ -2149,7 +2149,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, gapdel, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, gapdel, s));
                         }
                         else
                         {
@@ -2172,7 +2172,7 @@ namespace FileManipulations
                     if (columnindexes.Count != expectedfilecolumns.Length)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", GetFileNameWithoutExtension(gapfile));
+                        Console.WriteLine("{0} - File does not contain all expected columns. Please check file headers then restart this process.", FunctionTools.GetFileNameWithoutExtension(gapfile));
                         Console.WriteLine("************************************************************************************");
 
                         Console.WriteLine("Expected Columns: ");
@@ -2186,13 +2186,13 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, gapdel, "Month");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, gapdel, "Month");
 
                     //numbertests.
-                    int number1 = ColumnIndex(header, gapdel, "NET SLS UNITS w TCI Bibx".ToUpper());
-                    int number2 = ColumnIndex(header, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
-                    int number3 = ColumnIndex(header, gapdel, "NET INVC UNITS".ToUpper());
-                    int number4 = ColumnIndex(header, gapdel, "BIB EXPRESS TS UNITS Plus".ToUpper());
+                    int number1 = FunctionTools.ColumnIndex(header, gapdel, "NET SLS UNITS w TCI Bibx".ToUpper());
+                    int number2 = FunctionTools.ColumnIndex(header, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                    int number3 = FunctionTools.ColumnIndex(header, gapdel, "NET INVC UNITS".ToUpper());
+                    int number4 = FunctionTools.ColumnIndex(header, gapdel, "BIB EXPRESS TS UNITS Plus".ToUpper());
                     List<int> numbercolumnslist = new List<int> { number1, number2, number3, number4 };
 
                     // read rest of file and check columns.
@@ -2329,17 +2329,17 @@ namespace FileManipulations
 
 
         //old versions.
-        static public void MichelinDealerTireGapMonthly()
+        public static void MichelinDealerTireGapMonthly()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the US Dealer Tire GAP Batch file.");
-            string usdtgapfile = GetAFile();
-            string usdtgapfilename = GetFileNameWithoutExtension(usdtgapfile);
-            string usdtgapoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + usdtgapfilename + "_good_columns.txt";
-            string usdtgapoutfile2 = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + usdtgapfilename + "_bad_columns.txt";
+            string usdtgapfile = FunctionTools.GetAFile();
+            string usdtgapfilename = FunctionTools.GetFileNameWithoutExtension(usdtgapfile);
+            string usdtgapoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + usdtgapfilename + "_good_columns.txt";
+            string usdtgapoutfile2 = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + usdtgapfilename + "_bad_columns.txt";
 
-            char usdtgapdel = GetDelimiter();
+            char usdtgapdel = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month first 3 letters(ex. JAN): ");
             string usdtgapoldmonth = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the file Month number (ex. 01): ");
@@ -2387,7 +2387,7 @@ namespace FileManipulations
                             else
                             {
                                 //save column index in order they appear in the expected column list - > order matches new header write order.
-                                columnindexes.Add(ColumnIndex(usdtgapheader, usdtgapdel, s));
+                                columnindexes.Add(FunctionTools.ColumnIndex(usdtgapheader, usdtgapdel, s));
                             }
                         }
 
@@ -2413,8 +2413,8 @@ namespace FileManipulations
 
                         //Column indexes.
                         //int uniquecustid = ColumnIndex(usdtlamheader, usdtlamdel, "Plan Channel Member Group ID");
-                        int year = ColumnIndex(usdtgapheader, usdtgapdel, "Year");
-                        int Month = ColumnIndex(usdtgapheader, usdtgapdel, "Month");
+                        int year = FunctionTools.ColumnIndex(usdtgapheader, usdtgapdel, "Year");
+                        int Month = FunctionTools.ColumnIndex(usdtgapheader, usdtgapdel, "Month");
 
                         string line = string.Empty;
                         int count = 0;
@@ -2483,27 +2483,27 @@ namespace FileManipulations
                         }
 
                         Console.WriteLine();
-                        Console.WriteLine("Good records placed in - {0}", GetFileNameWithoutExtension(usdtgapoutfile));
-                        Console.WriteLine("{1} - Bad records placed in - {0}", GetFileNameWithoutExtension(usdtgapoutfile2), count);
+                        Console.WriteLine("Good records placed in - {0}", FunctionTools.GetFileNameWithoutExtension(usdtgapoutfile));
+                        Console.WriteLine("{1} - Bad records placed in - {0}", FunctionTools.GetFileNameWithoutExtension(usdtgapoutfile2), count);
                         Console.WriteLine();
                     }
                 }
             }
         }
 
-        static public void TestMonthlyFilesGAPTCAR()
+        public static void TestMonthlyFilesGAPTCAR()
         {
             //added splitline[x] = splitline[x].Replace(",", string.Empty); in foreach loop of columns to check 12/10/18
 
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the GAP TCAR file.");
-            string gapfile = GetAFile();
-            string gapfilename = GetFileNameWithoutExtension(gapfile);
-            string gapoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + gapfilename + "_good_columns.txt";
-            string gapoutfile2 = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + gapfilename + "_bad_columns.txt";
+            string gapfile = FunctionTools.GetAFile();
+            string gapfilename = FunctionTools.GetFileNameWithoutExtension(gapfile);
+            string gapoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + gapfilename + "_good_columns.txt";
+            string gapoutfile2 = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + gapfilename + "_bad_columns.txt";
 
-            char gapdel = GetDelimiter();
+            char gapdel = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string gapmonth = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -2553,7 +2553,7 @@ namespace FileManipulations
                             else
                             {
                                 //save column index in order they appear in the expected column list - > order matches new header write order.
-                                columnindexes.Add(ColumnIndex(gapheader, gapdel, s));
+                                columnindexes.Add(FunctionTools.ColumnIndex(gapheader, gapdel, s));
                             }
                         }
 
@@ -2579,13 +2579,13 @@ namespace FileManipulations
 
 
                         //Column indexes.
-                        int Month = ColumnIndex(gapheader, gapdel, "Month".ToUpper());
+                        int Month = FunctionTools.ColumnIndex(gapheader, gapdel, "Month".ToUpper());
 
                         //numbertests.
-                        int etslsunits = ColumnIndex(gapheader, gapdel, "ET SLS UNITS w TCI Bibx".ToUpper());
-                        int selloutunits = ColumnIndex(gapheader, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
-                        int netinvcunits = ColumnIndex(gapheader, gapdel, "NET INVC UNITS".ToUpper());
-                        int bibexpress = ColumnIndex(gapheader, gapdel, "BIB EXPRESS TS UNITS".ToUpper());
+                        int etslsunits = FunctionTools.ColumnIndex(gapheader, gapdel, "ET SLS UNITS w TCI Bibx".ToUpper());
+                        int selloutunits = FunctionTools.ColumnIndex(gapheader, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                        int netinvcunits = FunctionTools.ColumnIndex(gapheader, gapdel, "NET INVC UNITS".ToUpper());
+                        int bibexpress = FunctionTools.ColumnIndex(gapheader, gapdel, "BIB EXPRESS TS UNITS".ToUpper());
 
                         List<int> columnslist = new List<int> { etslsunits, selloutunits, netinvcunits, bibexpress };
 
@@ -2654,8 +2654,8 @@ namespace FileManipulations
                         }
 
                         Console.WriteLine();
-                        Console.WriteLine("Good records placed in - {0}", GetFileNameWithoutExtension(gapoutfile));
-                        Console.WriteLine("{1} - Bad records placed in - {0}", GetFileNameWithoutExtension(gapoutfile2), count);
+                        Console.WriteLine("Good records placed in - {0}", FunctionTools.GetFileNameWithoutExtension(gapoutfile));
+                        Console.WriteLine("{1} - Bad records placed in - {0}", FunctionTools.GetFileNameWithoutExtension(gapoutfile2), count);
                         Console.WriteLine();
                     }
                 }
@@ -2663,17 +2663,17 @@ namespace FileManipulations
 
         }
 
-        static public void MichelinTestMonthlyFilesMSPN()
+        public static void MichelinTestMonthlyFilesMSPN()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the MSPN file.");
-            string file = GetAFile();
-            string filename = GetFileNameWithoutExtension(file);
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_good_columns.txt";
+            string file = FunctionTools.GetAFile();
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_good_columns.txt";
 
 
-            char del = GetDelimiter();
+            char del = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string month = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -2711,7 +2711,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, del, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, del, s));
                         }
                         else
                         {
@@ -2732,7 +2732,7 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, del, "Month".ToUpper());
+                    int monthcolumn = FunctionTools.ColumnIndex(header, del, "Month".ToUpper());
 
 
                     //write new header -> with new column headers that match the table to be reloaded.
@@ -2817,7 +2817,7 @@ namespace FileManipulations
                     // test results
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("{0} - Test Results:", GetFileNameWithoutExtension(file));
+                    Console.WriteLine("{0} - Test Results:", FunctionTools.GetFileNameWithoutExtension(file));
                     Console.ResetColor();
 
                     if (errordelimitercount > 0)
@@ -2831,7 +2831,7 @@ namespace FileManipulations
 
                     if (failedrecordsdict.Count != 0 || missingcolumnlist.Count != 0)
                     {
-                        string failoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_failreport.txt";
+                        string failoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_failreport.txt";
 
                         using (StreamWriter failreportfile = new StreamWriter(failoutfile))
                         {
@@ -2895,16 +2895,16 @@ namespace FileManipulations
             }
         }
 
-        static public void MichelinCanadaTestMonthlyFilesMSPN()
+        public static void MichelinCanadaTestMonthlyFilesMSPN()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the MSPN file.");
-            string file = GetAFile();
-            string filename = GetFileNameWithoutExtension(file);
-            string testedoutfile = GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + filename + "_good_columns.txt";
+            string file = FunctionTools.GetAFile();
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            string testedoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + filename + "_good_columns.txt";
 
-            char del = GetDelimiter();
+            char del = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string month = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -2942,7 +2942,7 @@ namespace FileManipulations
                         if (filecolumn.Contains(s))
                         {
                             //save column index in order they appear in the expected column list - > order matches new header write order.
-                            columnindexes.Add(ColumnIndex(header, del, s));
+                            columnindexes.Add(FunctionTools.ColumnIndex(header, del, s));
                         }
                         else
                         {
@@ -2963,10 +2963,10 @@ namespace FileManipulations
                     }
 
                     //Column being checked indexes.
-                    int monthcolumn = ColumnIndex(header, del, "Month");
+                    int monthcolumn = FunctionTools.ColumnIndex(header, del, "Month");
 
                     //numbertests.
-                    int number1 = ColumnIndex(header, del, "SELLOUT UNITS".ToUpper());
+                    int number1 = FunctionTools.ColumnIndex(header, del, "SELLOUT UNITS".ToUpper());
                     List<int> numbercolumnslist = new List<int> { number1 };
 
                     //write new header -> with new column headers that match the table to be reloaded.
@@ -3074,7 +3074,7 @@ namespace FileManipulations
                     // test results
                     Console.WriteLine();
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("{0} - Test Results:", GetFileNameWithoutExtension(file));
+                    Console.WriteLine("{0} - Test Results:", FunctionTools.GetFileNameWithoutExtension(file));
                     Console.ResetColor();
 
                     if (errordelimitercount > 0)
@@ -3088,7 +3088,7 @@ namespace FileManipulations
 
                     if (failedrecordsdict.Count != 0 || missingcolumnlist.Count != 0)
                     {
-                        string failoutfile = GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_failreport.txt";
+                        string failoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_us_results" + "\\" + filename + "_failreport.txt";
 
                         using (StreamWriter failreportfile = new StreamWriter(failoutfile))
                         {
@@ -3153,17 +3153,17 @@ namespace FileManipulations
 
         }
 
-        static public void MichelinCanadaTestMonthlyFilesGAPTCAR()
+        public static void MichelinCanadaTestMonthlyFilesGAPTCAR()
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
             Console.WriteLine("Please enter the Gap TCAR file.");
-            string gapfile = GetAFile();
-            string gapfilename = GetFileNameWithoutExtension(gapfile);
-            string gapoutfile = GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + gapfilename + "_good_columns.txt";
-            string gapoutfile2 = GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + gapfilename + "_bad_columns.txt";
+            string gapfile = FunctionTools.GetAFile();
+            string gapfilename = FunctionTools.GetFileNameWithoutExtension(gapfile);
+            string gapoutfile = FunctionTools.GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + gapfilename + "_good_columns.txt";
+            string gapoutfile2 = FunctionTools.GetDesktopDirectory() + @"\michelin_canada_results" + "\\" + gapfilename + "_bad_columns.txt";
 
-            char gapdel = GetDelimiter();
+            char gapdel = FunctionTools.GetDelimiter();
             Console.Write("Enter the file Month number (ex. 01): ");
             string gapmonth = Console.ReadLine().Trim().ToUpper();
             Console.Write("Enter the files Year (YYYY): ");
@@ -3206,7 +3206,7 @@ namespace FileManipulations
                             else
                             {
                                 //save column index in order they appear in the expected column list - > order matches new header write order.
-                                columnindexes.Add(ColumnIndex(gapheader, gapdel, s));
+                                columnindexes.Add(FunctionTools.ColumnIndex(gapheader, gapdel, s));
                             }
                         }
 
@@ -3230,13 +3230,13 @@ namespace FileManipulations
                         gapbadfile.WriteLine("fail_report\t" + newheader);
 
                         //Column indexes.
-                        int month = ColumnIndex(gapheader, gapdel, "Month");
+                        int month = FunctionTools.ColumnIndex(gapheader, gapdel, "Month");
 
                         //numbertests.
-                        int number1 = ColumnIndex(gapheader, gapdel, "NET SLS UNITS w TCI Bibx".ToUpper());
-                        int number2 = ColumnIndex(gapheader, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
-                        int number3 = ColumnIndex(gapheader, gapdel, "NET INVC UNITS".ToUpper());
-                        int number4 = ColumnIndex(gapheader, gapdel, "BIB EXPRESS TS UNITS Plus".ToUpper());
+                        int number1 = FunctionTools.ColumnIndex(gapheader, gapdel, "NET SLS UNITS w TCI Bibx".ToUpper());
+                        int number2 = FunctionTools.ColumnIndex(gapheader, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                        int number3 = FunctionTools.ColumnIndex(gapheader, gapdel, "NET INVC UNITS".ToUpper());
+                        int number4 = FunctionTools.ColumnIndex(gapheader, gapdel, "BIB EXPRESS TS UNITS Plus".ToUpper());
                         List<int> columnslist = new List<int> { number1, number2, number3, number4 };
 
                         string line = string.Empty;
@@ -3314,8 +3314,8 @@ namespace FileManipulations
                         }
 
                         Console.WriteLine();
-                        Console.WriteLine("Good records placed in - {0}", GetFileNameWithoutExtension(gapoutfile));
-                        Console.WriteLine("{1} - Bad records placed in - {0}", GetFileNameWithoutExtension(gapoutfile2), count);
+                        Console.WriteLine("Good records placed in - {0}", FunctionTools.GetFileNameWithoutExtension(gapoutfile));
+                        Console.WriteLine("{1} - Bad records placed in - {0}", FunctionTools.GetFileNameWithoutExtension(gapoutfile2), count);
                         Console.WriteLine();
 
                     }

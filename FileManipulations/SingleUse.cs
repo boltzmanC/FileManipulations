@@ -12,18 +12,15 @@ namespace FileManipulations
 {
     class SingleUse
     {
-
         // Client Specific Tasks
-        //****************************************************************************************************************************************************
-        //****************************************************************************************************************************************************
-        static public void CSTProfileIDMapping() // not finished
+        public static void CSTProfileIDMapping() // not finished
         {
             //maps new profile names from first file with second file names/ids/info to new file.
 
             //old profiles - with names changed.
             Console.WriteLine("Current Profile List: ");
-            string old_file = GetAFile();
-            char delimiter1 = GetDelimiter();
+            string old_file = FunctionTools.GetAFile();
+            char delimiter1 = FunctionTools.GetDelimiter();
             Console.Write("Profile Id column name: ");
             string profile_id1 = Console.ReadLine();
             Console.Write("Profile Name column name: ");
@@ -35,8 +32,8 @@ namespace FileManipulations
             //new profiles.
             Console.WriteLine();
             Console.WriteLine("NEW Profile List: ");
-            string new_file = GetAFile();
-            char delimiter2 = GetDelimiter();
+            string new_file = FunctionTools.GetAFile();
+            char delimiter2 = FunctionTools.GetDelimiter();
             Console.Write("Profile Id column name: ");
             string profile_id2 = Console.ReadLine();
             Console.Write("Profile Name column name: ");
@@ -45,7 +42,7 @@ namespace FileManipulations
             profile_id2 = profile_id2.Trim().ToUpper();
             profile_name2 = profile_name2.Trim().ToUpper();
 
-            string new_list_file = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(new_file) + "_newnames.txt";
+            string new_list_file = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(new_file) + "_newnames.txt";
 
             Dictionary<string, string> file1_dict = new Dictionary<string, string>();
             Dictionary<string, string> file2_dict = new Dictionary<string, string>();
@@ -75,13 +72,13 @@ namespace FileManipulations
             }
         }
 
-        static public void CSTUsageMetricsFilter() //mostly finished
+        public static void CSTUsageMetricsFilter() //mostly finished
         {
 
             Console.Write("File: ");
             string File = Console.ReadLine();
 
-            string new_file = GetDesktopDirectory() + "\\neustar_users.txt";
+            string new_file = FunctionTools.GetDesktopDirectory() + "\\neustar_users.txt";
 
             using (StreamWriter newfile = new StreamWriter(new_file))
             {
@@ -111,7 +108,7 @@ namespace FileManipulations
 
         }
 
-        static public void BGToZipUrbanicityAverage() //read for info.
+        public static void BGToZipUrbanicityAverage() //read for info.
         {
             // input file columns: bg name| bg id| urbanicity code| urbanicity label| zip code code (parent zip)
 
@@ -132,7 +129,7 @@ namespace FileManipulations
                 return;
             }
 
-            string new_file = GetDesktopDirectory() + "\\zip_urbanicity.txt";
+            string new_file = FunctionTools.GetDesktopDirectory() + "\\zip_urbanicity.txt";
 
             Console.Write("Processing...");
 
@@ -215,7 +212,7 @@ namespace FileManipulations
                         urban_codes = list.ToArray();
                     }
 
-                    average_code = (SumOfIntArray(urban_codes) / urban_codes.Length);
+                    average_code = (FunctionTools.SumOfIntArray(urban_codes) / urban_codes.Length);
 
                     string write_code = average_code.ToString();
 
@@ -227,7 +224,7 @@ namespace FileManipulations
 
         }
 
-        static public void BehaviorAnalyzerSorting() //used for HBO & WB deliverable.
+        public static void BehaviorAnalyzerSorting() //used for HBO & WB deliverable.
         {
             // take the output of the Descibe Targets Module in E1 and reformat it.
             //    specifically, find the highest indexing segment for each Profile.
@@ -269,7 +266,7 @@ namespace FileManipulations
                 return;
             }
 
-            string new_file = GetDesktopDirectory() + "\\greatest_index_per_profile.txt";
+            string new_file = FunctionTools.GetDesktopDirectory() + "\\greatest_index_per_profile.txt";
 
             Console.Write("Processing...");
 
@@ -354,9 +351,7 @@ namespace FileManipulations
 
 
         // Custom one use methods
-        //****************************************************************************************************************************************************
-        //****************************************************************************************************************************************************
-        static public void FindDatesBeforeX() //custom, one use. needsto be standardized.
+        public static void FindDatesBeforeX() //custom, one use. needsto be standardized.
         {
             Console.Write("File: ");
             string file = Console.ReadLine();
@@ -387,7 +382,7 @@ namespace FileManipulations
 
             Console.Write("Processing...");
 
-            string outfile = GetDesktopDirectory() + "\\old_dates.txt";
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\old_dates.txt";
 
             using (StreamReader read_file = new StreamReader(file))
             {
@@ -410,7 +405,7 @@ namespace FileManipulations
                     while ((lines = read_file.ReadLine()) != null)
                     {
                         string[] line_array = lines.Split(split_char);
-                        int[] date2 = StringToIntArray(line_array[index], '-');
+                        int[] date2 = FunctionTools.StringToIntArray(line_array[index], '-');
 
                         //pattern "yyyy-MM-dd";
                         if (date2[0] < date1[0])
@@ -432,7 +427,7 @@ namespace FileManipulations
 
         }
 
-        static public void FixedWidthToPipeDelimited() // needs work.
+        public static void FixedWidthToPipeDelimited() // needs work.
         {
             Console.Write("File: ");
             string file = Console.ReadLine();
@@ -528,12 +523,12 @@ namespace FileManipulations
 
         }
 
-        static public void ReadTwoLines() //what does this do? 
+        public static void ReadTwoLines() //what does this do? 
         {
             Console.Write("File: ");
             string file = Console.ReadLine();
 
-            string new_file = GetDesktopDirectory() + "\\new_lines.txt";
+            string new_file = FunctionTools.GetDesktopDirectory() + "\\new_lines.txt";
 
             Console.Write("Processing...");
 
@@ -558,7 +553,7 @@ namespace FileManipulations
             ReadTwoLines();
         }
 
-        static public void FindIDsInTwoFiles() //compares two lists of IDs. two files each with one column of IDs.
+        public static void FindIDsInTwoFiles() //compares two lists of IDs. two files each with one column of IDs.
         {
             //both files must be a list of the IDs.         
 
@@ -577,7 +572,7 @@ namespace FileManipulations
             //   return;
             //}
 
-            string new_file = GetDesktopDirectory() + "\\new_lines.txt";
+            string new_file = FunctionTools.GetDesktopDirectory() + "\\new_lines.txt";
 
             Console.Write("Processing...");
 
@@ -629,14 +624,14 @@ namespace FileManipulations
             }
         }
 
-        static public void Dedupesaveextravalues()
+        public static void Dedupesaveextravalues()
         {
-            string file = GetAFile();
-            string column = GetColumn();
-            char delimeter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            string column = FunctionTools.GetColumn();
+            char delimeter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string newfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_uniquekeyrows.txt";
+            string newfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_uniquekeyrows.txt";
             string newfileheader = string.Empty;
 
             Dictionary<string, List<string>> rowkeys = new Dictionary<string, List<string>>();
@@ -647,7 +642,7 @@ namespace FileManipulations
                 List<string> headerlinebuilder = new List<string>();
                 if (header.Contains(txtq))
                 {
-                    headerlinebuilder.AddRange(SplitLineWithTxtQualifier(header, delimeter, txtq, false));
+                    headerlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(header, delimeter, txtq, false));
                 }
                 else
                 {
@@ -662,7 +657,7 @@ namespace FileManipulations
                 headerlinebuilder.Add("Extra Value5");
                 newfileheader = string.Join(delimeter.ToString(), headerlinebuilder.ToArray());
 
-                int columnid = ColumnIndex(header, delimeter, column);
+                int columnid = FunctionTools.ColumnIndex(header, delimeter, column);
 
                 int count = 0;
                 string line = string.Empty;
@@ -673,7 +668,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, delimeter, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, delimeter, txtq, false));
                     }
                     else
                     {
@@ -735,22 +730,22 @@ namespace FileManipulations
 
         }
 
-        static public void VlookupKeepNotFoundFromOriginalFile()
+        public static void VlookupKeepNotFoundFromOriginalFile()
         {
             //output char to elminate issues with , tabs etc...
             char newdelimiter = '|';
 
             //file that is being appeneded.
             Console.WriteLine("File being appended: ");
-            string ogfile = GetAFile();
-            char ogdelimiter = GetDelimiter();
+            string ogfile = FunctionTools.GetAFile();
+            char ogdelimiter = FunctionTools.GetDelimiter();
             Console.Write("ID Column Name: ");
             string ogidcolumn = Console.ReadLine().Trim().ToUpper();
 
             //file with data to append.
             Console.WriteLine("File with data to append: ");
-            string toappendfile = GetAFile();
-            char toappenddelimiter = GetDelimiter();
+            string toappendfile = FunctionTools.GetAFile();
+            char toappenddelimiter = FunctionTools.GetDelimiter();
             Console.Write("ID Column Name: ");
             string toappendidcolumn = Console.ReadLine().Trim().ToUpper();
 
@@ -761,7 +756,7 @@ namespace FileManipulations
             List<string> toappendheaderstorage = new List<string>();
 
             //new file.
-            string appendedfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(ogfile) + "_appended.txt";
+            string appendedfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(ogfile) + "_appended.txt";
 
             //qualifier?????
             Console.Write("Files have txt qualifier? (y/n): ");
@@ -769,17 +764,17 @@ namespace FileManipulations
 
             if (answer == "Y")
             {
-                char qualifier = GetTXTQualifier();
+                char qualifier = FunctionTools.GetTXTQualifier();
 
                 //read to append data file.
                 using (StreamReader toappenddata = new StreamReader(toappendfile))
                 {
                     string header = toappenddata.ReadLine();
-                    string[] headervalues = SplitLineWithTxtQualifier(header, toappenddelimiter, qualifier, true);
-                    string[] cleanheader = ArrayWithNoTxtQualifier(headervalues, qualifier);
+                    string[] headervalues = FunctionTools.SplitLineWithTxtQualifier(header, toappenddelimiter, qualifier, true);
+                    string[] cleanheader = FunctionTools.ArrayWithNoTxtQualifier(headervalues, qualifier);
 
                     //idcolumn index
-                    int toappendidcolumnindex = ColumnIndexWithQualifier(header, toappenddelimiter, qualifier, toappendidcolumn);
+                    int toappendidcolumnindex = FunctionTools.ColumnIndexWithQualifier(header, toappenddelimiter, qualifier, toappendidcolumn);
 
                     //add headers to storage list.
                     foreach (var h in cleanheader)
@@ -794,8 +789,8 @@ namespace FileManipulations
                     string toappendline = string.Empty;
                     while ((toappendline = toappenddata.ReadLine()) != null)
                     {
-                        string[] toappendsplitline = SplitLineWithTxtQualifier(toappendline, toappenddelimiter, qualifier, true);
-                        string[] cleantoappendsplitline = ArrayWithNoTxtQualifier(toappendsplitline, qualifier);
+                        string[] toappendsplitline = FunctionTools.SplitLineWithTxtQualifier(toappendline, toappenddelimiter, qualifier, true);
+                        string[] cleantoappendsplitline = FunctionTools.ArrayWithNoTxtQualifier(toappendsplitline, qualifier);
 
                         if (!ToAppendValues.ContainsKey(cleantoappendsplitline[toappendidcolumnindex]))
                         {
@@ -823,17 +818,17 @@ namespace FileManipulations
                     using (StreamWriter newfile = new StreamWriter(appendedfile))
                     {
                         string ogheader = filebeingappended.ReadLine();
-                        string[] ogheadervalues = SplitLineWithTxtQualifier(ogheader, ogdelimiter, qualifier, false);
+                        string[] ogheadervalues = FunctionTools.SplitLineWithTxtQualifier(ogheader, ogdelimiter, qualifier, false);
 
                         //clean headers
-                        ogheadervalues = ArrayWithNoTxtQualifier(ogheadervalues, qualifier);
+                        ogheadervalues = FunctionTools.ArrayWithNoTxtQualifier(ogheadervalues, qualifier);
 
                         //write new header to new file. Using new delimiter.
                         string newfileheader = string.Join(newdelimiter.ToString(), ogheadervalues) + newdelimiter.ToString() + string.Join(newdelimiter.ToString(), toappendheaderstorage.ToArray());
                         newfile.WriteLine(newfileheader);
 
                         //Find idcolumn index.
-                        int ogidcolumnindex = ColumnIndexWithQualifier(ogheader, ogdelimiter, qualifier, ogidcolumn);
+                        int ogidcolumnindex = FunctionTools.ColumnIndexWithQualifier(ogheader, ogdelimiter, qualifier, ogidcolumn);
                         //int length = ogheadervalues.Length;
 
                         //read ogfile.
@@ -842,9 +837,9 @@ namespace FileManipulations
                         {
                             while ((ogline = filebeingappended.ReadLine()) != null)
                             {
-                                string[] ogsplitline = SplitLineWithTxtQualifier(ogline, ogdelimiter, qualifier, false);
+                                string[] ogsplitline = FunctionTools.SplitLineWithTxtQualifier(ogline, ogdelimiter, qualifier, false);
                                 //clean qualifiers our of data
-                                ogsplitline = ArrayWithNoTxtQualifier(ogsplitline, qualifier);
+                                ogsplitline = FunctionTools.ArrayWithNoTxtQualifier(ogsplitline, qualifier);
 
                                 if (ToAppendValues.ContainsKey(ogsplitline[ogidcolumnindex]))
                                 {
@@ -880,7 +875,7 @@ namespace FileManipulations
                     string[] headervalues = header.Split(toappenddelimiter);
 
                     //idcolumn index
-                    int toappendidcolumnindex = ColumnIndex(header, toappenddelimiter, toappendidcolumn);
+                    int toappendidcolumnindex = FunctionTools.ColumnIndex(header, toappenddelimiter, toappendidcolumn);
 
                     //add headers to storage list.
                     foreach (var h in headervalues)
@@ -930,7 +925,7 @@ namespace FileManipulations
                         newfile.WriteLine(newfileheader);
 
                         //Find idcolumn index.
-                        int ogidcolumnindex = ColumnIndex(ogheader, ogdelimiter, ogidcolumn);
+                        int ogidcolumnindex = FunctionTools.ColumnIndex(ogheader, ogdelimiter, ogidcolumn);
                         //int length = ogheadervalues.Length;
 
                         //read ogfile.
@@ -968,16 +963,16 @@ namespace FileManipulations
 
         }
 
-        static public void AppendValueToEachLineInFile()
+        public static void AppendValueToEachLineInFile()
         {
             Console.WriteLine();
             Console.WriteLine("Append Value to Each Line in File.");
 
-            string file = GetAFile();
-            char delimeter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimeter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string appendedfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_appended.txt";
+            string appendedfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_appended.txt";
 
             Console.WriteLine();
 
@@ -1002,14 +997,14 @@ namespace FileManipulations
             }
         }
 
-        static public void FormatDateColumn() //changes date format. uses user defined original format to convert to mm/dd/yyyy 
+        public static void FormatDateColumn() //changes date format. uses user defined original format to convert to mm/dd/yyyy 
         {
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string columnname = GetColumn(); //toupper,trim,removed"
-            string newfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_" + columnname + ".txt";
+            string columnname = FunctionTools.GetColumn(); //toupper,trim,removed"
+            string newfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_" + columnname + ".txt";
 
             using (StreamWriter writefile = new StreamWriter(newfile))
             {
@@ -1017,10 +1012,10 @@ namespace FileManipulations
                 {
                     string header = readfile.ReadLine();
                     writefile.WriteLine(header);
-                    string[] columns = LineStringToArray(header, txtq, delimiter);
+                    string[] columns = FunctionTools.LineStringToArray(header, txtq, delimiter);
                     int length = columns.Length;
 
-                    int columnindex = ColumnIndexNew(header, delimiter, columnname, txtq);
+                    int columnindex = FunctionTools.ColumnIndexNew(header, delimiter, columnname, txtq);
 
                     //Get Date format.
                     Console.WriteLine("Accepts formats user defined format.");
@@ -1037,7 +1032,7 @@ namespace FileManipulations
 
                     while ((line = readfile.ReadLine()) != null)
                     {
-                        string[] linesplit = LineStringToArray(line, txtq, delimiter);
+                        string[] linesplit = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                         string date = linesplit[columnindex].Replace(delimiter.ToString(), string.Empty);
 
@@ -1064,17 +1059,17 @@ namespace FileManipulations
             }
         }
 
-        static public void FormatZipCodesAddLeadingZeroes()
+        public static void FormatZipCodesAddLeadingZeroes()
         {
             Console.WriteLine("Enter File and Zip Code Column Name That Needs to be Reformatted.");
             Console.WriteLine();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string zipcolumn = GetColumn();
-            string formattedfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_zipformatted.txt";
+            string zipcolumn = FunctionTools.GetColumn();
+            string formattedfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_zipformatted.txt";
 
             int padded = 0;
 
@@ -1084,12 +1079,12 @@ namespace FileManipulations
                 {
                     string header = readfile.ReadLine();
                     writefile.WriteLine(header);
-                    int columnindex = ColumnIndexNew(header, delimiter, zipcolumn, txtq);
+                    int columnindex = FunctionTools.ColumnIndexNew(header, delimiter, zipcolumn, txtq);
 
                     string line = string.Empty;
                     while ((line = readfile.ReadLine()) != null)
                     {
-                        string[] splitline = LineStringToArray(line, txtq, delimiter);
+                        string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                         //test zipcolumn
                         string zipcode = splitline[columnindex].Trim().Replace("\"", string.Empty);
@@ -1110,16 +1105,16 @@ namespace FileManipulations
             Console.WriteLine("{0} - Zip Codes Fixed", padded);
         }
 
-        static public void NumericValueCheck() // checks for number value in user defined column.
+        public static void NumericValueCheck() // checks for number value in user defined column.
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             string processcolumn = string.Empty;
             while (processcolumn != "n" || processcolumn != "N")
@@ -1127,7 +1122,7 @@ namespace FileManipulations
                 Console.Write("Enter Column Name: ");
                 string column = Console.ReadLine();
 
-                string onlynumbers = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_" + column + ".txt";
+                string onlynumbers = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_" + column + ".txt";
 
                 using (StreamReader readfile = new StreamReader(file))
                 {
@@ -1135,7 +1130,7 @@ namespace FileManipulations
                     {
                         string header = readfile.ReadLine();
 
-                        string[] columns = LineStringToArray(header, txtq, delimiter);
+                        string[] columns = FunctionTools.LineStringToArray(header, txtq, delimiter);
                         int length = columns.Length;
 
                         int col = 0;
@@ -1152,7 +1147,7 @@ namespace FileManipulations
                         string line = string.Empty;
                         while ((line = readfile.ReadLine()) != null)
                         {
-                            string[] splitline = LineStringToArray(line, txtq, delimiter);
+                            string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                             int number = 0;
                             if (!int.TryParse(splitline[col], out number))
@@ -1167,7 +1162,7 @@ namespace FileManipulations
             }
         }
 
-        static public void SwitchDateFormatInColumns()
+        public static void SwitchDateFormatInColumns()
         {
             // accepts user input date foramat to change
             // accepts user input for new date format to use
@@ -1178,10 +1173,10 @@ namespace FileManipulations
             Console.ResetColor();
 
             Console.WriteLine("-Target File-");
-            string file = GetAFile();
+            string file = FunctionTools.GetAFile();
 
-            char delimeter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            char delimeter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.Write("-Enter Pipe \"|\" delimited columns to change date format in.-");
             string enteredcolumnnames = Console.ReadLine();
@@ -1197,18 +1192,12 @@ namespace FileManipulations
 
             Console.Write("Enter new date format: ");
             string newdateformat = Console.ReadLine();
-
-
-
-
         }
 
 
 
         // Methods not in menu.
-        //****************************************************************************************************************************************************
-        //****************************************************************************************************************************************************
-        static public void TestStringLength() // only keeps records that have a char_length < 30.   
+        public static void TestStringLength() // only keeps records that have a char_length < 30.   
         {
             Console.Write("File: ");
             string file = Console.ReadLine();
@@ -1223,8 +1212,8 @@ namespace FileManipulations
             }
             Console.Write("Processing...");
 
-            string outfile = GetDesktopDirectory() + "\\good.txt";
-            string badrecords = GetDesktopDirectory() + "\\bad.txt";
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\good.txt";
+            string badrecords = FunctionTools.GetDesktopDirectory() + "\\bad.txt";
 
             using (StreamReader readfile = new StreamReader(file))
             {
@@ -1303,7 +1292,7 @@ namespace FileManipulations
             }
         }
 
-        static public void FindValueInColumn() //prints line with valid value in column to file, else prints to different file.
+        public static void FindValueInColumn() //prints line with valid value in column to file, else prints to different file.
         {
             // work in progress... rethink logic a bit.
             Console.WriteLine("Find lines with string x in column y.");
@@ -1332,8 +1321,8 @@ namespace FileManipulations
 
             Console.Write("Processing...");
 
-            string outfile = GetDesktopDirectory() + "\\found_lines.txt";
-            string outfile2 = GetDesktopDirectory() + "\\extra_lines.txt";
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\found_lines.txt";
+            string outfile2 = FunctionTools.GetDesktopDirectory() + "\\extra_lines.txt";
 
             using (StreamReader read_file = new StreamReader(file))
             {
@@ -1379,7 +1368,7 @@ namespace FileManipulations
             Console.WriteLine("{0} - lines found to contain {1}", count, input);
         }
 
-        static public void ValuePull() // pulls specified values in columns chosen by user.
+        public static void ValuePull() // pulls specified values in columns chosen by user.
         {
             Console.Write("File: ");
             string file = Console.ReadLine();
@@ -1411,7 +1400,7 @@ namespace FileManipulations
 
 
             Console.Write("Processing...");
-            string outfile = GetDesktopDirectory() + "\\columns.txt";
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\columns.txt";
 
             using (StreamWriter write_to = new StreamWriter(outfile))
             {
@@ -1435,7 +1424,7 @@ namespace FileManipulations
             }
         }
 
-        static public void AddUniqueIDColumnToFile() // Not Used
+        public static void AddUniqueIDColumnToFile() // Not Used
         {
             int my_number = 1000000;
 
@@ -1484,7 +1473,7 @@ namespace FileManipulations
 
             Console.Write("Processing...");
 
-            string outfile = GetDesktopDirectory() + "\\file_plus_IDs.txt";
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\file_plus_IDs.txt";
 
             using (StreamReader read_file = new StreamReader(file))
             {
@@ -1508,7 +1497,7 @@ namespace FileManipulations
             }
         }
 
-        static public void PullUniqueRows() //not done yet.
+        public static void PullUniqueRows() //not done yet.
         {
             Console.Write("File: ");
             string file = Console.ReadLine();
@@ -1533,7 +1522,7 @@ namespace FileManipulations
 
             Dictionary<string, string> ID_values = new Dictionary<string, string>();
 
-            string newfile = GetDesktopDirectory() + "\\deduped_records.txt";
+            string newfile = FunctionTools.GetDesktopDirectory() + "\\deduped_records.txt";
             string line;
             int count_lines = 0;
 
@@ -1581,7 +1570,7 @@ namespace FileManipulations
 
         }
 
-        static public void EditLineInListOfFiles()
+        public static void EditLineInListOfFiles()
         {
             Console.Write("Folder: ");
             string txt_file_folder = Console.ReadLine();
@@ -1625,17 +1614,17 @@ namespace FileManipulations
 
         }
 
-        static public void SkipUserSpecifiedLines() // copies lines to new file (skips user defined lines, manually entered)
+        public static void SkipUserSpecifiedLines() // copies lines to new file (skips user defined lines, manually entered)
         {
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
 
             Console.Write("Enter line to not read: ");
 
             string line_to_replace = Console.ReadLine();
             line_to_replace = line_to_replace.Trim().ToUpper();
 
-            string new_file = GetDesktopDirectory() + "\\lines_removed.txt";
+            string new_file = FunctionTools.GetDesktopDirectory() + "\\lines_removed.txt";
 
             using (StreamReader readfile = new StreamReader(file))
             {

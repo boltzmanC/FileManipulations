@@ -12,13 +12,7 @@ namespace FileManipulations
 {
     public class CoStarTester
     {
-
-
-
         //COSTAR File Processes.
-        //****************************************************************************************************************************************************
-        //****************************************************************************************************************************************************
-
         // ADD CHECKS FOR UNIQUE COLUMNS IN DATA PULL.
 
         // Every year the Costar Deliverable consists of two main file groups. 
@@ -33,7 +27,7 @@ namespace FileManipulations
 
 
         // Annual Points Files Deliverable
-        static public void CostarPointsFiles()
+        public static void CostarPointsFiles()
         {
             // Points are delievered in a .csv file on sdfiler.
             //    upload into the costar instance.
@@ -59,7 +53,7 @@ namespace FileManipulations
 
             Console.Write("Drag and Drop E1 Points Folder Here (CEX, BUSSUM, or DMGRA): ");
             string e1directory = Console.ReadLine();
-            char e1deli = GetDelimiter();
+            char e1deli = FunctionTools.GetDelimiter();
             string[] costarfilepaths = Directory.GetFiles(@costardirectory);
             string[] e1filepaths = Directory.GetFiles(@e1directory);
 
@@ -85,7 +79,7 @@ namespace FileManipulations
                 int filenumber = 1;
                 foreach (var file in e1filepaths)
                 {
-                    Console.WriteLine("{0} - {1}", filenumber++, GetFileNameWithoutExtension(file));
+                    Console.WriteLine("{0} - {1}", filenumber++, FunctionTools.GetFileNameWithoutExtension(file));
                 }
 
                 Console.Write("Enter number for radi 1-3 file: ");
@@ -132,7 +126,7 @@ namespace FileManipulations
             {
                 Console.WriteLine();
                 Console.WriteLine("E1 File: ");
-                Console.WriteLine(GetFileNameWithoutExtension(e1filepaths[0]));
+                Console.WriteLine(FunctionTools.GetFileNameWithoutExtension(e1filepaths[0]));
                 Console.WriteLine();
                 Console.Write("Radii123 File (1) or Radii45 File (2), Enter 1 or 2: ");
                 string answer = Console.ReadLine().Trim();
@@ -166,7 +160,7 @@ namespace FileManipulations
 
             Console.WriteLine();
             Console.WriteLine("Reading Costar Files...");
-            char costardeli = GetDelimiter();
+            char costardeli = FunctionTools.GetDelimiter();
 
             int costarfilesprocesses = 0;
             List<string> failedsitesmasterlist = new List<string>();
@@ -222,7 +216,7 @@ namespace FileManipulations
                 Console.ResetColor();
             }
 
-            string failedlist = GetDesktopDirectory() + "\\failedsites.txt";
+            string failedlist = FunctionTools.GetDesktopDirectory() + "\\failedsites.txt";
             using (StreamWriter failures = new StreamWriter(failedlist))
             {
                 foreach (var f in failedsitesmasterlist)
@@ -244,7 +238,7 @@ namespace FileManipulations
 
         }
 
-        static public void CostarReadE1Radii123PointsFile(string filepath, char delimiter, Dictionary<string, string[]> radii1, Dictionary<string, string[]> radii2, Dictionary<string, string[]> radii3)
+        public static void CostarReadE1Radii123PointsFile(string filepath, char delimiter, Dictionary<string, string[]> radii1, Dictionary<string, string[]> radii2, Dictionary<string, string[]> radii3)
         {
             //read the one file into memory. same as old program. THIS WILL ONLY READ THE RADII 1-3 file
             using (StreamReader e1file = new StreamReader(filepath))
@@ -316,7 +310,7 @@ namespace FileManipulations
             Console.ResetColor();
         }
 
-        static public void CostarReadE1Radii45PointsFile(string filepath, char delimiter, Dictionary<string, string[]> radii1, Dictionary<string, string[]> radii2)
+        public static void CostarReadE1Radii45PointsFile(string filepath, char delimiter, Dictionary<string, string[]> radii1, Dictionary<string, string[]> radii2)
         {
             //read the one file into memory. same as old program. THIS WILL ONLY READ THE RADII 1-3 file
             using (StreamReader e1file = new StreamReader(filepath))
@@ -372,7 +366,7 @@ namespace FileManipulations
             Console.ResetColor();
         }
 
-        static public string CostarTestCostarRadiiXLine(Dictionary<string, string[]> radiidictionary, string siteid, string radiinumber, string[] splitline, string currentfile)
+        public static string CostarTestCostarRadiiXLine(Dictionary<string, string[]> radiidictionary, string siteid, string radiinumber, string[] splitline, string currentfile)
         {
             //string failstate = "fail";
 
@@ -392,7 +386,7 @@ namespace FileManipulations
                         if (costarvalue != e1value && (costarvalue + 1) != e1value && (costarvalue - 1) != e1value)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Write("File: {0}", GetFileNameWithoutExtension(currentfile));
+                            Console.Write("File: {0}", FunctionTools.GetFileNameWithoutExtension(currentfile));
                             Console.Write(" SiteID: {0:10}, Radii: {1}, Column: {2} CValue: {3}, E1Value: {4}", siteid, radiinumber, radiidictindex, splitline[radiidictindex], radiidictionary[siteid][v]);
                             Console.WriteLine();
                             Console.ResetColor();
@@ -408,7 +402,7 @@ namespace FileManipulations
             return "siteid_radiinumber_columnnumber_costarvalue_e1value";
         }
 
-        static public void CostarPointsFilesManualCheck()
+        public static void CostarPointsFilesManualCheck()
         {
             // Output all variables for user specified site, also output all radii values.
 
@@ -423,7 +417,7 @@ namespace FileManipulations
             Console.WriteLine("Drag and Drop Costar Points Folder Here (CEX, BUSSUM, or DMGRA): ");
             string costardirectory = Console.ReadLine();
             string[] costarfilepaths = Directory.GetFiles(@costardirectory);
-            char deli = GetDelimiter();
+            char deli = FunctionTools.GetDelimiter();
             //char qualifier = GetTXTQualifier();
 
             Dictionary<string, List<string>> radiivalues = new Dictionary<string, List<string>>();
@@ -519,7 +513,7 @@ namespace FileManipulations
             }
         }
 
-        static public void CoStarUSManualTestGapFile()
+        public static void CoStarUSManualTestGapFile()
         {
             Console.Write("Drag and Drop the variable group folder here: ");
             string bussumdirectory = Console.ReadLine();
@@ -543,7 +537,7 @@ namespace FileManipulations
 
             string[] costarfilepaths = Directory.GetFiles(bussumdirectory);//allfilepaths.ToArray();
 
-            char deli = GetDelimiter();
+            char deli = FunctionTools.GetDelimiter();
             //string[] costarfilepaths = Directory.GetFiles(costardirectory);
 
             // gap file dictionary.
@@ -705,13 +699,13 @@ namespace FileManipulations
             }
         }
 
-        static public void CostarTotalPointsCount()
+        public static void CostarTotalPointsCount()
         {
             Console.Write("Drag and Drop Costar Points Folder Here (CEX, BUSSUM, or DMGRA): ");
             string costardirectory = Console.ReadLine();
 
             string[] costarfilepaths = Directory.GetFiles(@costardirectory);
-            char costardeli = GetDelimiter();
+            char costardeli = FunctionTools.GetDelimiter();
 
             Dictionary<string, string> totalsites = new Dictionary<string, string>();
             Dictionary<string, string> totalsiteradii = new Dictionary<string, string>();
@@ -777,13 +771,13 @@ namespace FileManipulations
             Console.WriteLine();
         }
 
-        static public void CostarPointsDupeRemove()
+        public static void CostarPointsDupeRemove()
         {
             Console.Write("Drag and Drop Costar Points Folder Here (CEX, BUSSUM, or DMGRA): ");
             string costardirectory = Console.ReadLine();
 
             string[] costarfilepaths = Directory.GetFiles(@costardirectory);
-            char costardeli = GetDelimiter();
+            char costardeli = FunctionTools.GetDelimiter();
 
             Dictionary<string, string> records = new Dictionary<string, string>();
 
@@ -794,7 +788,7 @@ namespace FileManipulations
 
             foreach (var file in costarfilepaths)
             {
-                string dedupefile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_dedupe.txt";
+                string dedupefile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_dedupe.txt";
 
                 Dictionary<string, string> totalsiteradii = new Dictionary<string, string>();
 
@@ -857,7 +851,7 @@ namespace FileManipulations
             Console.WriteLine();
         }
 
-        static public void CostarRemoveColumnFromFile()
+        public static void CostarRemoveColumnFromFile()
         {
             //only for costar files. no txt qualifier needed.
 
@@ -865,7 +859,7 @@ namespace FileManipulations
             string costardirectory = Console.ReadLine();
 
             string[] costarfilepaths = Directory.GetFiles(@costardirectory);
-            char costardeli = GetDelimiter();
+            char costardeli = FunctionTools.GetDelimiter();
 
             Console.Write("Column Name: ");
             string columntoremove = Console.ReadLine().Trim().ToUpper();
@@ -875,7 +869,7 @@ namespace FileManipulations
 
             foreach (var file in costarfilepaths)
             {
-                string removedcolumnfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_" + columntoremove + "_removed.txt";
+                string removedcolumnfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_" + columntoremove + "_removed.txt";
 
                 using (StreamWriter writefile = new StreamWriter(removedcolumnfile))
                 {
@@ -883,7 +877,7 @@ namespace FileManipulations
                     {
                         string header = readfile.ReadLine();
                         string[] headersplit = header.Split(costardeli);
-                        int columntoremoveindex = ColumnIndex(header, costardeli, columntoremove);
+                        int columntoremoveindex = FunctionTools.ColumnIndex(header, costardeli, columntoremove);
                         List<string> newheaderbuilder = new List<string>();
 
                         for (int x = 0; x <= headersplit.Length - 1; x++)
@@ -926,7 +920,7 @@ namespace FileManipulations
 
 
         //CoStar Canada GAP file
-        static public void CostarCanadaTestGapFile()
+        public static void CostarCanadaTestGapFile()
         {
             // test CoStar Canada Gap File.
             // Steps
@@ -983,19 +977,19 @@ namespace FileManipulations
             int sitestested = 0;
 
             Console.WriteLine("-Enter CoStar Gap File-");
-            string gapfile = GetAFile();
-            char gapdeli = GetDelimiter();
+            string gapfile = FunctionTools.GetAFile();
+            char gapdeli = FunctionTools.GetDelimiter();
             char txtq = '"';
 
             using (StreamReader gapdata = new StreamReader(gapfile))
             {
                 string header = gapdata.ReadLine();
 
-                int radii1 = ColumnIndexNew(header, gapdeli, "Radius1Amount", txtq); //returns 0 based index.
-                int radii2 = ColumnIndexNew(header, gapdeli, "Radius2Amount", txtq);
-                int radii3 = ColumnIndexNew(header, gapdeli, "Radius3Amount", txtq);
-                int radii4 = ColumnIndexNew(header, gapdeli, "Radius4Amount", txtq);
-                int radii5 = ColumnIndexNew(header, gapdeli, "Radius5Amount", txtq);
+                int radii1 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius1Amount", txtq); //returns 0 based index.
+                int radii2 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius2Amount", txtq);
+                int radii3 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius3Amount", txtq);
+                int radii4 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius4Amount", txtq);
+                int radii5 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius5Amount", txtq);
 
                 List<int> radiivalues = new List<int>();
                 radiivalues.Add(radii1);
@@ -1127,7 +1121,7 @@ namespace FileManipulations
 
             if (failedradii > 0)
             {
-                string failedlist = GetDesktopDirectory() + "\\failedsites.txt";
+                string failedlist = FunctionTools.GetDesktopDirectory() + "\\failedsites.txt";
                 using (StreamWriter failures = new StreamWriter(failedlist))
                 {
                     //header
@@ -1160,7 +1154,7 @@ namespace FileManipulations
             string directory510 = Console.ReadLine();
             string[] e1filepaths510 = Directory.GetFiles(@directory510);
 
-            char e1deli = GetDelimiter();
+            char e1deli = FunctionTools.GetDelimiter();
 
             foreach (var file in e1filepaths123)
             {
@@ -1231,7 +1225,7 @@ namespace FileManipulations
                         }
                     }
                 }
-                Console.WriteLine("{0} - file read", GetFileNameWithoutExtension(file));
+                Console.WriteLine("{0} - file read", FunctionTools.GetFileNameWithoutExtension(file));
             }
 
             foreach (var file in e1filepaths510)
@@ -1279,7 +1273,7 @@ namespace FileManipulations
                         }
                     }
                 }
-                Console.WriteLine("{0} - file read", GetFileNameWithoutExtension(file));
+                Console.WriteLine("{0} - file read", FunctionTools.GetFileNameWithoutExtension(file));
             }
         }
 
@@ -1293,11 +1287,11 @@ namespace FileManipulations
             HashSet<string> costarvariablelist = new HashSet<string>();
 
             Console.WriteLine("-Enter CoStar Gap File-");
-            string gapfile = GetAFile();
-            char gapdeli = GetDelimiter();
+            string gapfile = FunctionTools.GetAFile();
+            char gapdeli = FunctionTools.GetDelimiter();
 
             Console.WriteLine("-Enter CoStar Variable File-");
-            string variablefile = GetAFile();
+            string variablefile = FunctionTools.GetAFile();
             List<string> tofindvariablelist = new List<string>();
 
             using (StreamReader consumer = new StreamReader(variablefile))
@@ -1399,7 +1393,7 @@ namespace FileManipulations
             }
         }
 
-        static public void CostarCanadaReformatNightlyFeedOutput()
+        public static void CostarCanadaReformatNightlyFeedOutput()
         {
             // Reformat the output of the CoStar Nightly feed files
             // Will work for either nightly files or "gap deliverable files". 
@@ -1410,8 +1404,8 @@ namespace FileManipulations
             //PropertyID|Latitude|Longitude|VariableID|Radius1Amount|Radius2Amount|Radius3Amount|Radius4Amount|Radius5Amount
 
             Console.WriteLine("-Enter CoStar Gap File-");
-            string gapfile = GetAFile();
-            char gapdeli = GetDelimiter();
+            string gapfile = FunctionTools.GetAFile();
+            char gapdeli = FunctionTools.GetDelimiter();
             char txtq = '"';
 
             Console.WriteLine("-Enter File Path to Variable List files-");
@@ -1422,7 +1416,7 @@ namespace FileManipulations
             foreach (var file in variablefilepaths)
             {
                 Console.WriteLine();
-                string outputname = GetFileNameWithoutExtension(file);
+                string outputname = FunctionTools.GetFileNameWithoutExtension(file);
                 Console.WriteLine("Reading {0}.", outputname);
 
                 List<string> variables = new List<string>();
@@ -1447,15 +1441,15 @@ namespace FileManipulations
                 {
                     string header = gapdata.ReadLine();
 
-                    int radii1 = ColumnIndexNew(header, gapdeli, "Radius1Amount", txtq); //returns 0 based index.
-                    int radii2 = ColumnIndexNew(header, gapdeli, "Radius2Amount", txtq);
-                    int radii3 = ColumnIndexNew(header, gapdeli, "Radius3Amount", txtq);
-                    int radii4 = ColumnIndexNew(header, gapdeli, "Radius4Amount", txtq);
-                    int radii5 = ColumnIndexNew(header, gapdeli, "Radius5Amount", txtq);
-                    int propertyid = ColumnIndexNew(header, gapdeli, "PropertyID", txtq);
-                    int variableid = ColumnIndexNew(header, gapdeli, "VariableID", txtq);
-                    int latindex = ColumnIndexNew(header, gapdeli, "Latitude", txtq);
-                    int lonindex = ColumnIndexNew(header, gapdeli, "Longitude", txtq);
+                    int radii1 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius1Amount", txtq); //returns 0 based index.
+                    int radii2 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius2Amount", txtq);
+                    int radii3 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius3Amount", txtq);
+                    int radii4 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius4Amount", txtq);
+                    int radii5 = FunctionTools.ColumnIndexNew(header, gapdeli, "Radius5Amount", txtq);
+                    int propertyid = FunctionTools.ColumnIndexNew(header, gapdeli, "PropertyID", txtq);
+                    int variableid = FunctionTools.ColumnIndexNew(header, gapdeli, "VariableID", txtq);
+                    int latindex = FunctionTools.ColumnIndexNew(header, gapdeli, "Latitude", txtq);
+                    int lonindex = FunctionTools.ColumnIndexNew(header, gapdeli, "Longitude", txtq);
 
                     List<int> radiivalues = new List<int>();
                     radiivalues.Add(radii1);
@@ -1514,7 +1508,7 @@ namespace FileManipulations
                 }
 
                 // output DICT values to new file.
-                string newfile = GetDesktopDirectory() + "\\" + outputname + "_output.txt";
+                string newfile = FunctionTools.GetDesktopDirectory() + "\\" + outputname + "_output.txt";
 
                 using (StreamWriter outfile = new StreamWriter(newfile))
                 {
@@ -1611,11 +1605,11 @@ namespace FileManipulations
         public static void CostarSumDataColumns()
         {
 
-            string file = GetAFile();
-            char deli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char deli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string countsfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "-variablesums.csv";
+            string countsfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "-variablesums.csv";
 
             Console.WriteLine();
             Console.Write("Enter column index to start summing at: ");
@@ -1630,7 +1624,7 @@ namespace FileManipulations
                 List<string> headerlinebuilder = new List<string>();
                 if (header.Contains(txtq))
                 {
-                    headerlinebuilder.AddRange(SplitLineWithTxtQualifier(header, deli, txtq, false));
+                    headerlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(header, deli, txtq, false));
                 }
                 else
                 {
@@ -1648,7 +1642,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli, txtq, false));
                     }
                     else
                     {
@@ -1684,7 +1678,7 @@ namespace FileManipulations
 
 
         // Annual Area Files Deliverable.
-        static public void CostarAreaFiles()
+        public static void CostarAreaFiles()
         {
             // Assumes variables are in the same order in both sets of files.
             Console.Write("Drag and Drop Costar AREA Desktop Folder Here (CEX, BUSSUM, or DMGRA): ");
@@ -1694,8 +1688,8 @@ namespace FileManipulations
             string[] costarfilepaths = Directory.GetFiles(@costardirectory);
             string[] e1filepaths = Directory.GetFiles(@e1directory);
 
-            char e1deli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            char e1deli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Dictionary<string, List<string>> e1areas = new Dictionary<string, List<string>>();
             int areasadded = 0;
@@ -1710,7 +1704,7 @@ namespace FileManipulations
 
                     while ((line = e1file.ReadLine()) != null)
                     {
-                        string[] splitline = SplitLineWithTxtQualifier(line, e1deli, txtq, false); //line.Split(e1deli);
+                        string[] splitline = FunctionTools.SplitLineWithTxtQualifier(line, e1deli, txtq, false); //line.Split(e1deli);
 
                         string e1key = splitline[0];
                         List<string> valuestoadd = new List<string>();
@@ -1745,7 +1739,7 @@ namespace FileManipulations
 
                     while ((line = costarfile.ReadLine()) != null)
                     {
-                        string[] splitline = SplitLineWithTxtQualifier(line, e1deli, txtq, false); //line.Split(e1deli);
+                        string[] splitline = FunctionTools.SplitLineWithTxtQualifier(line, e1deli, txtq, false); //line.Split(e1deli);
                         string costarkey = splitline[0];
 
                         if (e1areas.ContainsKey(costarkey))
@@ -1762,7 +1756,7 @@ namespace FileManipulations
                                     if (costarvalue != e1value && (costarvalue + 1) != e1value && (costarvalue - 1) != e1value)
                                     {
                                         Console.ForegroundColor = ConsoleColor.Red;
-                                        Console.Write("File: {0}", GetFileNameWithoutExtension(file));
+                                        Console.Write("File: {0}", FunctionTools.GetFileNameWithoutExtension(file));
                                         Console.Write(" AreaID - {0}, Column - {1} Costar Value - {2}, E1 Value - {3}", costarkey, headervalues[v], splitline[v], e1areas[costarkey][v - 1]);
                                         Console.WriteLine();
                                         Console.ResetColor();
@@ -1791,12 +1785,12 @@ namespace FileManipulations
             }
         }
 
-        static public void CostarAreaFilesManualCheck()
+        public static void CostarAreaFilesManualCheck()
         {
             Console.WriteLine("Drag and Drop Costar AREA File Here: ");
-            string costarfile = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string costarfile = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Dictionary<string, List<string>> costarareas = new Dictionary<string, List<string>>();
             int areasadded = 0;
@@ -1819,13 +1813,13 @@ namespace FileManipulations
                     }
                 }
 
-                string[] headernames = LineStringToArray(headerline, txtq, delimiter);
+                string[] headernames = FunctionTools.LineStringToArray(headerline, txtq, delimiter);
                 headerlist = headernames.ToList();
 
                 string line = string.Empty;
                 while ((line = costardatafile.ReadLine()) != null)
                 {
-                    string[] splitline = LineStringToArray(line, txtq, delimiter);
+                    string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                     //data starts at splitline[1].
                     string e1key = splitline[0];
@@ -1865,7 +1859,7 @@ namespace FileManipulations
 
                 if (costarareas.ContainsKey(userentry))
                 {
-                    Console.WriteLine("File: {0}", GetFileNameWithoutExtension(costarfile));
+                    Console.WriteLine("File: {0}", FunctionTools.GetFileNameWithoutExtension(costarfile));
 
                     string[] columnarray = headerlist.ToArray();
                     //string spacer = " | ";
@@ -1886,12 +1880,12 @@ namespace FileManipulations
             }
         }
 
-        static public void CostarAreaFilesSummaries()
+        public static void CostarAreaFilesSummaries()
         {
             Console.Write("Drag and Drop Costar AREA Desktop Folder Here (CEX, BUSSUM, or DMGRA): ");
             string costardirectory = Console.ReadLine();
             string[] costarfilepaths = Directory.GetFiles(@costardirectory);
-            char e1deli = GetDelimiter();
+            char e1deli = FunctionTools.GetDelimiter();
 
             Dictionary<string, List<string>> costarareas = new Dictionary<string, List<string>>();
             int areasadded = 0;
@@ -1965,7 +1959,7 @@ namespace FileManipulations
 
             List<double> summarizedvalues = summaries.ToList();
 
-            string newfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(costarfilepaths[0]) + "_summaries.txt";
+            string newfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(costarfilepaths[0]) + "_summaries.txt";
             using (StreamWriter outfile = new StreamWriter(newfile))
             {
                 for (int v = 0; v <= summarizedvalues.Count - 1; v++)

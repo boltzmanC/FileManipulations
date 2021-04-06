@@ -32,8 +32,8 @@ namespace FileManipulations
             while (answer != "n")
             {
                 Console.WriteLine();
-                string file = GetAFile();
-                char delimiter = GetDelimiter();
+                string file = FunctionTools.GetAFile();
+                char delimiter = FunctionTools.GetDelimiter();
 
                 files.Add(file);
                 delimiters.Add(delimiter);
@@ -52,7 +52,7 @@ namespace FileManipulations
             }
 
             // if all columns match...
-            string newfile = GetDesktopDirectory() + "\\combined-file.txt";
+            string newfile = FunctionTools.GetDesktopDirectory() + "\\combined-file.txt";
 
             int totallines = 0;
 
@@ -90,13 +90,13 @@ namespace FileManipulations
             Console.WriteLine("Copies a file line by line. This is done to get rid of hidden EOL or EOF formatting which occurs sometimes when creating a file on a MAC and transfering it to PC.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
             Console.Write("Processing...");
 
-            string filename = GetFileNameWithoutExtension(file);
-            string outfile = GetDesktopDirectory() + "\\" + filename + "_copy.txt";
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\" + filename + "_copy.txt";
 
             using (StreamReader readfile = new StreamReader(file))
             {
@@ -107,7 +107,7 @@ namespace FileManipulations
                     string line;
                     while ((line = readfile.ReadLine()) != null)
                     {
-                        string[] linearray = LineStringToArray(line, txtq, delimiter);
+                        string[] linearray = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                         string newline = string.Join(delimiter.ToString(), linearray);
 
@@ -127,19 +127,19 @@ namespace FileManipulations
             Console.WriteLine("Checks for duplicate values in user entered column. Writes unique values and count of each occurrence to new file.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string columnname = GetColumn();
-            string newfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_uniquevalues.txt";
+            string columnname = FunctionTools.GetColumn();
+            string newfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_uniquevalues.txt";
 
             using (StreamReader readfile = new StreamReader(file))
             {
                 Dictionary<string, int> uniquevalues = new Dictionary<string, int>();
 
                 string header = readfile.ReadLine();
-                int columnindex = ColumnIndexNew(header, delimiter, columnname, txtq);
+                int columnindex = FunctionTools.ColumnIndexNew(header, delimiter, columnname, txtq);
 
                 int count = 0;
                 int countunique = 0;
@@ -147,7 +147,7 @@ namespace FileManipulations
                 while ((line = readfile.ReadLine()) != null)
                 {
                     Console.Write("\r {0}", count++);
-                    string[] splitline = LineStringToArray(line, txtq, delimiter);
+                    string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                     if (!uniquevalues.ContainsKey(splitline[columnindex]))
                     {
@@ -186,29 +186,29 @@ namespace FileManipulations
 
             //original file.
             Console.Write("File being added to: ");
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine("ID Column Name:");
-            string idcolumnname = GetColumn();
+            string idcolumnname = FunctionTools.GetColumn();
             Console.WriteLine();
             Console.WriteLine();
 
             //data to add.
             Console.Write("File With New Column: ");
-            string grabfromfile = GetAFile();
-            char toadddelimiter = GetDelimiter();
-            char toaddtxtq = GetTXTQualifier();
+            string grabfromfile = FunctionTools.GetAFile();
+            char toadddelimiter = FunctionTools.GetDelimiter();
+            char toaddtxtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine("ID Column Name: ");
-            string toaddidcolumnname = GetColumn();
+            string toaddidcolumnname = FunctionTools.GetColumn();
 
             Console.Write("Column To Add Name: ");
-            string toaddcolumnname = GetColumn();
+            string toaddcolumnname = FunctionTools.GetColumn();
 
             //returned file.
-            string outfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_" + toaddcolumnname + "_appended.txt";
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_" + toaddcolumnname + "_appended.txt";
             Console.WriteLine("Processing...");
 
             // Process...
@@ -218,16 +218,16 @@ namespace FileManipulations
             using (StreamReader toaddcolumnfile = new StreamReader(grabfromfile))
             {
                 string header = toaddcolumnfile.ReadLine();
-                string[] headercolumns = LineStringToArray(header, toaddtxtq, toadddelimiter);
+                string[] headercolumns = FunctionTools.LineStringToArray(header, toaddtxtq, toadddelimiter);
                 int length = headercolumns.Length;
 
-                int toaddidcolumn = ColumnIndexNew(header, toadddelimiter, toaddidcolumnname, toaddtxtq);
-                int toaddvaluecolumn = ColumnIndexNew(header, toadddelimiter, toaddcolumnname, toaddtxtq);
+                int toaddidcolumn = FunctionTools.ColumnIndexNew(header, toadddelimiter, toaddidcolumnname, toaddtxtq);
+                int toaddvaluecolumn = FunctionTools.ColumnIndexNew(header, toadddelimiter, toaddcolumnname, toaddtxtq);
 
                 string line;
                 while ((line = toaddcolumnfile.ReadLine()) != null)
                 {
-                    string[] linesplit = LineStringToArray(line, toaddtxtq, toadddelimiter);
+                    string[] linesplit = FunctionTools.LineStringToArray(line, toaddtxtq, toadddelimiter);
 
                     if (!idvalues.ContainsKey(linesplit[toaddidcolumn]))
                     {
@@ -250,13 +250,13 @@ namespace FileManipulations
                     string[] headervalues = header.Split(delimiter);
                     int length = headervalues.Length;
 
-                    int idcolumnindex = ColumnIndexNew(header, delimiter, idcolumnname, txtq);
+                    int idcolumnindex = FunctionTools.ColumnIndexNew(header, delimiter, idcolumnname, txtq);
                     writefile.WriteLine("{0}{1} {2}", header, delimiter, toaddcolumnname);
 
                     string line = string.Empty;
                     while ((line = originalfile.ReadLine()) != null)
                     {
-                        string[] linesplit = LineStringToArray(line, txtq, delimiter);
+                        string[] linesplit = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                         if (idvalues.ContainsKey(linesplit[idcolumnindex]))
                         {
@@ -281,19 +281,19 @@ namespace FileManipulations
 
             //file that is being appeneded.
             Console.WriteLine("File being appended: ");
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
             Console.Write("ID Column Name: ");
-            string idcolumn = GetColumn();
+            string idcolumn = FunctionTools.GetColumn();
 
             //file with data to append.
             Console.WriteLine("File with data to append: ");
-            string toappendfile = GetAFile();
-            char toappenddelimiter = GetDelimiter();
-            char toappendtxtq = GetTXTQualifier();
+            string toappendfile = FunctionTools.GetAFile();
+            char toappenddelimiter = FunctionTools.GetDelimiter();
+            char toappendtxtq = FunctionTools.GetTXTQualifier();
             Console.Write("ID Column Name: ");
-            string toappendidcolumn = GetColumn();
+            string toappendidcolumn = FunctionTools.GetColumn();
 
             //Dictionary for data from append data file.
             Dictionary<string, string> ToAppendValues = new Dictionary<string, string>();
@@ -302,16 +302,16 @@ namespace FileManipulations
             List<string> toappendheaderstorage = new List<string>();
 
             //new file.
-            string appendedfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_appended.txt";
+            string appendedfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_appended.txt";
 
             //read to append data file.
             using (StreamReader toappenddata = new StreamReader(toappendfile))
             {
                 string header = toappenddata.ReadLine();
-                string[] headervalues = LineStringToArray(header, toappendtxtq, toappenddelimiter);
+                string[] headervalues = FunctionTools.LineStringToArray(header, toappendtxtq, toappenddelimiter);
 
                 //idcolumn index
-                int toappendidcolumnindex = ColumnIndexNew(header, toappenddelimiter, toappendidcolumn, toappendtxtq);
+                int toappendidcolumnindex = FunctionTools.ColumnIndexNew(header, toappenddelimiter, toappendidcolumn, toappendtxtq);
 
                 //add headers to storage list.
                 foreach (var h in headervalues)
@@ -326,7 +326,7 @@ namespace FileManipulations
                 string toappendline = string.Empty;
                 while ((toappendline = toappenddata.ReadLine()) != null)
                 {
-                    string[] toappendsplitline = LineStringToArray(toappendline, toappendtxtq, toappenddelimiter);
+                    string[] toappendsplitline = FunctionTools.LineStringToArray(toappendline, toappendtxtq, toappenddelimiter);
 
                     if (!ToAppendValues.ContainsKey(toappendsplitline[toappendidcolumnindex]))
                     {
@@ -354,14 +354,14 @@ namespace FileManipulations
                 using (StreamWriter newfile = new StreamWriter(appendedfile))
                 {
                     string header = filebeingappended.ReadLine();
-                    string[] headervalues = LineStringToArray(header, txtq, delimiter);
+                    string[] headervalues = FunctionTools.LineStringToArray(header, txtq, delimiter);
 
                     //write new header to new file. Using new delimiter.
                     string newfileheader = string.Join(newdelimiter.ToString(), headervalues) + newdelimiter.ToString() + string.Join(newdelimiter.ToString(), toappendheaderstorage.ToArray());
                     newfile.WriteLine(newfileheader);
 
                     //Find idcolumn index.
-                    int idcolumnindex = ColumnIndexNew(header, delimiter, idcolumn, txtq);
+                    int idcolumnindex = FunctionTools.ColumnIndexNew(header, delimiter, idcolumn, txtq);
                     //int length = ogheadervalues.Length;
 
                     //read ogfile.
@@ -370,7 +370,7 @@ namespace FileManipulations
                     {
                         while ((line = filebeingappended.ReadLine()) != null)
                         {
-                            string[] splitline = LineStringToArray(line, txtq, delimiter);
+                            string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                             if (ToAppendValues.ContainsKey(splitline[idcolumnindex]))
                             {
@@ -399,25 +399,25 @@ namespace FileManipulations
             Console.WriteLine("Adds user designated string to column \"empty\" column. IF the column does have data in it. The values will be overwritten and replaced with the user designated values.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.Write("Column Name: ");
-            string columnname = GetColumn();
+            string columnname = FunctionTools.GetColumn();
 
             Console.Write("Value to add: ");
             string valuetoadd = Console.ReadLine().Replace("\"", string.Empty).Trim().ToUpper();
 
-            string newfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_" + valuetoadd + "_added.txt";
+            string newfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_" + valuetoadd + "_added.txt";
 
             using (StreamReader readfile = new StreamReader(file))
             {
                 string header = readfile.ReadLine();
-                string[] headervalues = LineStringToArray(header, txtq, delimiter);
+                string[] headervalues = FunctionTools.LineStringToArray(header, txtq, delimiter);
                 int length = headervalues.Length;
 
-                int columnindex = ColumnIndexNew(header, delimiter, columnname, txtq);
+                int columnindex = FunctionTools.ColumnIndexNew(header, delimiter, columnname, txtq);
 
                 using (StreamWriter writefile = new StreamWriter(newfile))
                 {
@@ -426,7 +426,7 @@ namespace FileManipulations
                     string line = string.Empty;
                     while ((line = readfile.ReadLine()) != null)
                     {
-                        string[] splitline = LineStringToArray(line, txtq, delimiter);
+                        string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                         if (splitline[columnindex] != valuetoadd)
                         {
@@ -453,9 +453,9 @@ namespace FileManipulations
 
             Console.WriteLine("-Add string as new column value-");
 
-            string file = GetAFile();
-            char deli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char deli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine();
             Console.Write("New Column name: ");
@@ -464,14 +464,14 @@ namespace FileManipulations
             Console.Write("Value to add: ");
             string valuetoadd = Console.ReadLine().Trim();
 
-            string appendedfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_columnvalueadded.txt";
+            string appendedfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_columnvalueadded.txt";
 
             using (StreamReader readfile = new StreamReader(file))
             {
                 using (StreamWriter writefile = new StreamWriter(appendedfile))
                 {
                     string header = readfile.ReadLine();
-                    string[] headersplit = LineStringToArray(header, txtq, deli);
+                    string[] headersplit = FunctionTools.LineStringToArray(header, txtq, deli);
                     List<string> headerbuilder = headersplit.ToList();
                     headerbuilder.Add(columnname);
 
@@ -482,7 +482,7 @@ namespace FileManipulations
                     while ((line = readfile.ReadLine()) != null)
                     {
                         List<string> splitlinebuilder = new List<string>();
-                        splitlinebuilder.AddRange(LineStringToArray(line, txtq, deli));
+                        splitlinebuilder.AddRange(FunctionTools.LineStringToArray(line, txtq, deli));
 
                         // add new value
                         splitlinebuilder.Add(valuetoadd);
@@ -501,15 +501,15 @@ namespace FileManipulations
             Console.WriteLine("Delete all data in user designated column.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine();
             Console.Write("Enter Column Name: ");
             string columnname = Console.ReadLine();
 
-            string columndataremoved = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_columndataremoved.txt";
+            string columndataremoved = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_columndataremoved.txt";
 
             using (StreamReader readfile = new StreamReader(file))
             {
@@ -518,12 +518,12 @@ namespace FileManipulations
                     string header = readfile.ReadLine();
                     outfile.WriteLine(header);
 
-                    int columnindex = ColumnIndexNew(header, delimiter, columnname, txtq);
+                    int columnindex = FunctionTools.ColumnIndexNew(header, delimiter, columnname, txtq);
 
                     string line = string.Empty;
                     while ((line = readfile.ReadLine()) != null)
                     {
-                        string[] splitline = LineStringToArray(line, txtq, delimiter);
+                        string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                         splitline[columnindex] = string.Empty; //target value deleted.
 
@@ -546,7 +546,7 @@ namespace FileManipulations
             Console.WriteLine("Get user designated # of records from file. Count starts at the beginning of the file.");
             Console.ResetColor();
 
-            string file = GetAFile();
+            string file = FunctionTools.GetAFile();
 
             Console.Write("Records to skip: ");
             string skiplines = Console.ReadLine();
@@ -572,7 +572,7 @@ namespace FileManipulations
             Console.Write("Processing...");
 
 
-            string filename = GetFileNameWithoutExtension(file);
+            string filename = FunctionTools.GetFileNameWithoutExtension(file);
             string outfile = Directory.GetParent(file) + "\\" + filename + "_subset" + "_" + numberofrecords + ".txt";
 
             using (StreamWriter writeto = new StreamWriter(outfile))
@@ -660,15 +660,15 @@ namespace FileManipulations
             Console.WriteLine("-Copies user designated column(s) to new file-");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char deli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char deli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string outfile = Directory.GetParent(file) + "\\" + GetFileNameWithoutExtension(file) + "_selectedcolumns.txt";
+            string outfile = Directory.GetParent(file) + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_selectedcolumns.txt";
 
             Console.WriteLine();
             Console.WriteLine("Column list file, pipe delimited names on one line: ");
-            string columnfile = GetAFile();
+            string columnfile = FunctionTools.GetAFile();
 
             string columnsentered = string.Empty;
             using (StreamReader columnlist = new StreamReader(columnfile))
@@ -686,7 +686,7 @@ namespace FileManipulations
                 using (StreamWriter writefile = new StreamWriter(outfile))
                 {
                     string header = readfile.ReadLine();
-                    string[] headersplit = SplitLineWithTxtQualifier(header, deli, txtq, false);
+                    string[] headersplit = FunctionTools.SplitLineWithTxtQualifier(header, deli, txtq, false);
 
                     writefile.WriteLine(string.Join(deli.ToString(), columnarray)); //new header
 
@@ -723,11 +723,11 @@ namespace FileManipulations
             Console.WriteLine("-Copies user designated column(s) with values to new file-");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char deli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char deli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string outfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_selectedcolumns.txt";
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_selectedcolumns.txt";
 
             Console.WriteLine();
             Console.Write("Enter Pipe Delimited Column(s): ");
@@ -759,7 +759,7 @@ namespace FileManipulations
                     string line = string.Empty;
                     while ((line = readfile.ReadLine()) != null)
                     {
-                        string[] splitline = LineStringToArray(line, txtq, deli);
+                        string[] splitline = FunctionTools.LineStringToArray(line, txtq, deli);
 
                         if (logic.ToUpper() == "AND")
                         {
@@ -828,12 +828,12 @@ namespace FileManipulations
             Console.WriteLine("Do not remember what this does - Dylan 10/10/2019.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.Write("Id Column Name: ");
-            string idcolumn = GetColumn();
+            string idcolumn = FunctionTools.GetColumn();
 
             Console.Write("Enter BlankEmptyorZero character: ");
             string valuetofind = Console.ReadLine();
@@ -847,7 +847,7 @@ namespace FileManipulations
                 valuetofind = blankemptyorzero.ToString();
             }
 
-            string newfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_blankemptyorzero.txt";
+            string newfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_blankemptyorzero.txt";
 
             using (StreamReader readfile = new StreamReader(file))
             {
@@ -864,11 +864,11 @@ namespace FileManipulations
                     while ((line = readfile.ReadLine()) != null)
                     {
                         List<string> foundvalues = new List<string>();
-                        int columnindex = ColumnIndex(line, delimiter, idcolumn);
+                        int columnindex = FunctionTools.ColumnIndex(line, delimiter, idcolumn);
 
                         int tempvalue = 0;
 
-                        string[] splitline = LineStringToArray(line, txtq, delimiter);
+                        string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                         for (int x = 0; x <= splitline.Length - 1; x++)
                         {
@@ -907,9 +907,9 @@ namespace FileManipulations
             Console.WriteLine("Pulls user designated number of random records from a target file.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.Write("Enter record id column name: ");
             string id = Console.ReadLine().Trim().ToUpper();
@@ -924,7 +924,7 @@ namespace FileManipulations
             }
             Console.WriteLine();
 
-            string newfile = Directory.GetParent(file) + "\\" + GetFileNameWithoutExtension(file) + "_rsubset_" + recordstopull + ".txt";
+            string newfile = Directory.GetParent(file) + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_rsubset_" + recordstopull + ".txt";
             Console.WriteLine();
 
             long totalrecords = 0;
@@ -952,7 +952,7 @@ namespace FileManipulations
                 using (StreamReader readfile = new StreamReader(file))
                 {
                     string header = readfile.ReadLine();
-                    int idindex = ColumnIndexWithQualifier(header, delimiter, txtq, id);
+                    int idindex = FunctionTools.ColumnIndexWithQualifier(header, delimiter, txtq, id);
                     writefile.WriteLine(header);
 
 
@@ -968,7 +968,7 @@ namespace FileManipulations
 
                         //readline to copy over
                         string line = readfile.ReadLine();
-                        string[] linesplit = SplitLineWithTxtQualifier(line, delimiter, txtq, false);
+                        string[] linesplit = FunctionTools.SplitLineWithTxtQualifier(line, delimiter, txtq, false);
 
                         if (!recordkeeper.ContainsKey(linesplit[idindex])) //test if duplicate
                         {
@@ -987,16 +987,16 @@ namespace FileManipulations
             Console.WriteLine("Pull records with value x in column y.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             string moveon = string.Empty;
 
             while (moveon != "n")
             {
                 Console.Write("Enter Column Name with Value: ");
-                string columnname = GetColumn();
+                string columnname = FunctionTools.GetColumn();
 
                 Console.Write("Enter Value to find: ");
                 string valuetofind = Console.ReadLine().Trim();
@@ -1004,24 +1004,24 @@ namespace FileManipulations
                 Console.WriteLine();
                 Console.Write("Processing...");
 
-                string newfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_" + columnname + "_" + valuetofind + ".txt";
+                string newfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_" + columnname + "_" + valuetofind + ".txt";
 
                 using (StreamReader readfile = new StreamReader(file))
                 {
                     using (StreamWriter writefile = new StreamWriter(newfile))
                     {
                         string header = readfile.ReadLine();
-                        string[] headersplit = LineStringToArray(header, txtq, delimiter);
+                        string[] headersplit = FunctionTools.LineStringToArray(header, txtq, delimiter);
                         int length = headersplit.Length;
 
-                        int columnindex = ColumnIndexNew(header, delimiter, columnname, txtq);
+                        int columnindex = FunctionTools.ColumnIndexNew(header, delimiter, columnname, txtq);
 
                         writefile.WriteLine(header);
 
                         string line;
                         while ((line = readfile.ReadLine()) != null)
                         {
-                            string[] splitline = LineStringToArray(line, txtq, delimiter);
+                            string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                             if (splitline[columnindex] == valuetofind)
                             {
@@ -1045,11 +1045,11 @@ namespace FileManipulations
             Console.WriteLine("Pulls records with value in user specified column(s). Pulls based on AND/OR logic.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string outfile = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_foundrecords.txt";
+            string outfile = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_foundrecords.txt";
 
             Console.WriteLine();
             Console.Write("Enter Pipe Delimited Column(s): ");
@@ -1073,7 +1073,7 @@ namespace FileManipulations
                     List<int> columnindexlist = new List<int>();
                     foreach (var item in columnarray)
                     {
-                        int index = ColumnIndexNew(header, delimiter, item, txtq);
+                        int index = FunctionTools.ColumnIndexNew(header, delimiter, item, txtq);
 
                         columnindexlist.Add(index);
                     }
@@ -1081,7 +1081,7 @@ namespace FileManipulations
                     string line = string.Empty;
                     while ((line = readfile.ReadLine()) != null)
                     {
-                        string[] splitline = LineStringToArray(line, txtq, delimiter);
+                        string[] splitline = FunctionTools.LineStringToArray(line, txtq, delimiter);
 
                         if (logic.ToUpper() == "AND")
                         {
@@ -1138,12 +1138,12 @@ namespace FileManipulations
             Console.WriteLine("Pulls all records that contain the specific string character sequence entered by the user.");
             Console.ResetColor();
 
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
-            string pulledrecords = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_pulledrecords.txt";
-            string leftovers = GetDesktopDirectory() + "\\" + GetFileNameWithoutExtension(file) + "_leftovers.txt";
+            string pulledrecords = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_pulledrecords.txt";
+            string leftovers = FunctionTools.GetDesktopDirectory() + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "_leftovers.txt";
 
             Console.WriteLine();
             Console.WriteLine("-Enter space delimited characters or strings to find-");
@@ -1314,9 +1314,9 @@ namespace FileManipulations
             }
 
             Console.WriteLine("File to Test.");
-            string file = GetAFile();
-            char delimiter = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char delimiter = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             using (StreamReader readfile = new StreamReader(file))
             {
@@ -1325,7 +1325,7 @@ namespace FileManipulations
                 bool lesscolumns = false;
 
                 string header = readfile.ReadLine();
-                string[] headersplit = SplitLineWithTxtQualifier(header, delimiter, txtq, false);
+                string[] headersplit = FunctionTools.SplitLineWithTxtQualifier(header, delimiter, txtq, false);
 
                 List<string> headersplitupper = new List<string>();
                 foreach (var c in headersplit)
@@ -1405,7 +1405,7 @@ namespace FileManipulations
                             }
                         }
 
-                        using (StreamWriter newdefinitionfile = new StreamWriter(GetDesktopDirectory() + "\\" + definitionfilepath.Split('/').Last()))
+                        using (StreamWriter newdefinitionfile = new StreamWriter(FunctionTools.GetDesktopDirectory() + "\\" + definitionfilepath.Split('/').Last()))
                         {
                             foreach (var value in fileinfo)
                             {
@@ -1431,7 +1431,7 @@ namespace FileManipulations
 
                     if (yesno.ToUpper() == "y".ToUpper())
                     {
-                        using (StreamWriter newdefinitionfile = new StreamWriter(GetDesktopDirectory() + "\\newcolumnlistfordefinitionfile.txt"))
+                        using (StreamWriter newdefinitionfile = new StreamWriter(FunctionTools.GetDesktopDirectory() + "\\newcolumnlistfordefinitionfile.txt"))
                         {
                             newdefinitionfile.WriteLine("Target file column List");
                             newdefinitionfile.WriteLine();

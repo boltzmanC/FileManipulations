@@ -99,7 +99,7 @@ namespace FileManipulations
             Console.WriteLine("Click and drag the file here.");
             //Create folder for the files.
 
-            string folderpath = GetDesktopDirectory() + @"\MichelinMSPNFiles";
+            string folderpath = FunctionTools.GetDesktopDirectory() + @"\MichelinMSPNFiles";
 
             if (!Directory.Exists(folderpath))
             {
@@ -107,8 +107,8 @@ namespace FileManipulations
             }
 
             //Get the file.
-            string filepath = GetAFile();
-            string newfilepath = folderpath + "\\" + GetFileNameWithoutExtension(filepath) + "_notouchy.txt"; //.csv
+            string filepath = FunctionTools.GetAFile();
+            string newfilepath = folderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(filepath) + "_notouchy.txt"; //.csv
 
             Console.WriteLine("Michelin magic happening... please standbye...");
 
@@ -117,7 +117,7 @@ namespace FileManipulations
             //MichelinXLSXToPipeTXT(filepath, newfilepath);
 
             //    Read File format columns. Resave.
-            string formattedactivemspn = folderpath + "\\" + GetFileNameWithoutExtension(filepath) + "_ColumnValuesFormatted.txt";
+            string formattedactivemspn = folderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(filepath) + "_ColumnValuesFormatted.txt";
 
 
             // if not using XLSX -> CSV converter uncomment this code.
@@ -136,11 +136,11 @@ namespace FileManipulations
                 string[] columnlist = header.Split(mspndel);
 
                 //Find Columns. - > Leading zeroes format - String.Format("{0:000000}", 6); -> 000006
-                int mspnid = ColumnIndex(header, mspndel, "MSPN ID");                      //MSPN
-                int brandid = ColumnIndex(header, mspndel, "Code Marque ID");              //BRAND
-                int productlineid = ColumnIndex(header, mspndel, "Product Line DESC");     //PRODUCTLINE
-                int groupcategorynames = ColumnIndex(header, mspndel, "Groupe Category");  //DSS_CATEGORY
-                int customerspecificflag = ColumnIndex(header, mspndel, "Customer Specific Flag");
+                int mspnid = FunctionTools.ColumnIndex(header, mspndel, "MSPN ID");                      //MSPN
+                int brandid = FunctionTools.ColumnIndex(header, mspndel, "Code Marque ID");              //BRAND
+                int productlineid = FunctionTools.ColumnIndex(header, mspndel, "Product Line DESC");     //PRODUCTLINE
+                int groupcategorynames = FunctionTools.ColumnIndex(header, mspndel, "Groupe Category");  //DSS_CATEGORY
+                int customerspecificflag = FunctionTools.ColumnIndex(header, mspndel, "Customer Specific Flag");
 
                 List<string> grpcategoryvalues = new List<string> { "ENTRY (S,T)", "V", "H", "Z", "REC/COM", "WINTER" }; //Group Category (case sensative)
 
@@ -199,7 +199,7 @@ namespace FileManipulations
                 //Get Column indexes.
                 foreach (var s in filecolumnstochange)
                 {
-                    columnindexes.Add(ColumnIndex(header, mspndel, s));
+                    columnindexes.Add(FunctionTools.ColumnIndex(header, mspndel, s));
                 }
 
                 using (StreamWriter writemspn = new StreamWriter(activemspnfilereload))
@@ -240,7 +240,7 @@ namespace FileManipulations
                 string header = readformatedmspns.ReadLine();
 
                 //Column filter.
-                int filtercolumn = ColumnIndex(header, mspndel, "Code Marque DESC"); //    Filter the Code Marque DESC column for BFGoodrich, Michelin, Uniroyal Brands. write those rows to new file.
+                int filtercolumn = FunctionTools.ColumnIndex(header, mspndel, "Code Marque DESC"); //    Filter the Code Marque DESC column for BFGoodrich, Michelin, Uniroyal Brands. write those rows to new file.
                 List<string> filteroptions = new List<string> { "BFGOODRICH", "MICHELIN", "UNIROYAL" };
 
 
@@ -281,7 +281,7 @@ namespace FileManipulations
                 string groupcategorycolumn = "Groupe Category";
 
                 //find column.
-                int groupcategoryindex = ColumnIndex(header, mspndel, groupcategorycolumn);
+                int groupcategoryindex = FunctionTools.ColumnIndex(header, mspndel, groupcategorycolumn);
 
                 using (StreamWriter writegroupcategory = new StreamWriter(groupcategorylookupfile))
                 {
@@ -343,7 +343,7 @@ namespace FileManipulations
                 List<int> columnindexes = new List<int> { };
                 foreach (var s in filecolumnstochange)
                 {
-                    columnindexes.Add(ColumnIndex(header, mspndel, s));
+                    columnindexes.Add(FunctionTools.ColumnIndex(header, mspndel, s));
                 }
 
                 using (StreamWriter writeproductlines = new StreamWriter(productlineslookup))
@@ -412,7 +412,7 @@ namespace FileManipulations
                 List<int> columnindexes = new List<int> { };
                 foreach (var s in filecolumnstochange)
                 {
-                    columnindexes.Add(ColumnIndex(header, mspndel, s));
+                    columnindexes.Add(FunctionTools.ColumnIndex(header, mspndel, s));
                 }
 
                 using (StreamWriter writekeyproductlines = new StreamWriter(keyproductlines))
@@ -463,7 +463,7 @@ namespace FileManipulations
                 string custromerflagcolumn = "Customer Specific Flag";
 
                 //find column.
-                int flagcolumnindex = ColumnIndex(header, mspndel, custromerflagcolumn);
+                int flagcolumnindex = FunctionTools.ColumnIndex(header, mspndel, custromerflagcolumn);
 
                 using (StreamWriter customerflagfile = new StreamWriter(customerspecificfile))
                 {
@@ -511,7 +511,7 @@ namespace FileManipulations
             string[] filearray = Directory.GetFiles(folderpath);
             foreach (var f in filearray)
             {
-                Console.WriteLine(GetFileNameWithoutExtension(f) + ".txt");
+                Console.WriteLine(FunctionTools.GetFileNameWithoutExtension(f) + ".txt");
             }
             Console.WriteLine();
         }
@@ -526,9 +526,9 @@ namespace FileManipulations
         static public void MichelinPOLKReaderMultiTask()
         {
             // create directory for splitfiles.
-            string splitfilefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts\splitfiles";
-            string zipfilefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts\zipcounts";
-            string polkfilefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts\polkcounts";
+            string splitfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts\splitfiles";
+            string zipfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts\zipcounts";
+            string polkfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts\polkcounts";
 
             if (!Directory.Exists(splitfilefolderpath))
             {
@@ -550,7 +550,7 @@ namespace FileManipulations
             Console.Write("File: ");
             var inFile = new FileInfo(Console.ReadLine());
             //var polkziplistfile = Console.ReadLine();
-            char deli = GetDelimiter();
+            char deli = FunctionTools.GetDelimiter();
             char txtq = '"';
             Console.WriteLine();
 
@@ -600,8 +600,8 @@ namespace FileManipulations
             string[] michelinzipdatafilepaths = Directory.GetFiles(@splitfilefolderpath);
 
             Console.WriteLine("-Enter State file-");
-            string statefile = GetAFile();
-            char statedeli = GetDelimiter();
+            string statefile = FunctionTools.GetAFile();
+            char statedeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Dictionary<string, HashSet<string>> statezipdictionary = new Dictionary<string, HashSet<string>>();
@@ -616,7 +616,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, statedeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, statedeli, txtq, false));
                     }
                     else
                     {
@@ -685,11 +685,11 @@ namespace FileManipulations
 
         static public Task<string> MichelinPOLKZipDataReader(string file1, char deli1, char txtq, Dictionary<string, HashSet<string>> statelookup)
         {
-            string zipfilefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts\zipcounts";
-            string polkfilefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts\polkcounts";
+            string zipfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts\zipcounts";
+            string polkfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts\polkcounts";
 
-            string zipcountsfile = zipfilefolderpath + "\\" + GetFileNameWithoutExtension(file1) + "zip_counts.txt"; // list of zips, appended with counts
-            string polkcountsfile = polkfilefolderpath + "\\" + GetFileNameWithoutExtension(file1) + "polk_counts.txt";
+            string zipcountsfile = zipfilefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(file1) + "zip_counts.txt"; // list of zips, appended with counts
+            string polkcountsfile = polkfilefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(file1) + "polk_counts.txt";
 
             Dictionary<string, int> ziplist = new Dictionary<string, int>();
             Dictionary<string, int> polkkeysums = new Dictionary<string, int>();
@@ -707,7 +707,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli1, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli1, txtq, false));
                     }
                     else
                     {
@@ -813,7 +813,7 @@ namespace FileManipulations
             char txtq = '"';
             Console.WriteLine();
 
-            string splitfilefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts\";
+            string splitfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts\";
             string polkcountsfile = splitfilefolderpath + "\\" + "polk_counts.txt";
 
             Dictionary<string, int> uspolkcounts = new Dictionary<string, int>();
@@ -830,7 +830,7 @@ namespace FileManipulations
                         List<string> splitlinebuilder = new List<string>();
                         if (line.Contains(txtq))
                         {
-                            splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli, txtq, false));
+                            splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli, txtq, false));
                         }
                         else
                         {
@@ -879,7 +879,7 @@ namespace FileManipulations
             char txtq = '"';
             Console.WriteLine();
 
-            string splitfilefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts\";
+            string splitfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts\";
             string zipcountsfile = splitfilefolderpath + "\\" + "zip_counts.txt";
             string statecountsfile = splitfilefolderpath + "\\" + "state_counts.txt";
 
@@ -899,7 +899,7 @@ namespace FileManipulations
                         List<string> splitlinebuilder = new List<string>();
                         if (line.Contains(txtq))
                         {
-                            splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli, txtq, false));
+                            splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli, txtq, false));
                         }
                         else
                         {
@@ -988,24 +988,24 @@ namespace FileManipulations
             // use previously created zip counts files.
 
             Console.WriteLine("-Enter Current Year Zip Counts file-");
-            string currentyearfile = GetAFile();
-            char currentyeardeli = GetDelimiter();
+            string currentyearfile = FunctionTools.GetAFile();
+            char currentyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Console.WriteLine("-Enter Last Year Zip Counts file-");
-            string lasatyearfile = GetAFile();
-            char lastyeardeli = GetDelimiter();
+            string lasatyearfile = FunctionTools.GetAFile();
+            char lastyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             char txtq = '"';
-            string splitfilefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts";
+            string splitfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts";
             if (!Directory.Exists(splitfilefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(splitfilefolderpath);
             }
 
-            string newziplist = splitfilefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_newzips.txt";
-            string droppedziplist = splitfilefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_drops.txt";
+            string newziplist = splitfilefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_newzips.txt";
+            string droppedziplist = splitfilefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_drops.txt";
 
             HashSet<string> newzips = new HashSet<string>();
             HashSet<string> droppedzips = new HashSet<string>();
@@ -1029,7 +1029,7 @@ namespace FileManipulations
 
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -1058,7 +1058,7 @@ namespace FileManipulations
 
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -1096,7 +1096,7 @@ namespace FileManipulations
 
                 if (header.Contains(txtq))
                 {
-                    splitlinebuilder.AddRange(SplitLineWithTxtQualifier(header, currentyeardeli, txtq, false));
+                    splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(header, currentyeardeli, txtq, false));
                 }
                 else
                 {
@@ -1119,7 +1119,7 @@ namespace FileManipulations
 
                 if (header.Contains(txtq))
                 {
-                    splitlinebuilder.AddRange(SplitLineWithTxtQualifier(header, currentyeardeli, txtq, false));
+                    splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(header, currentyeardeli, txtq, false));
                 }
                 else
                 {
@@ -1142,13 +1142,13 @@ namespace FileManipulations
         static public void MichelinPOLKZipCountsDiffReader()
         {
             Console.WriteLine("-Enter Current Year Zip Counts file-");
-            string currentyearfile = GetAFile();
-            char currentyeardeli = GetDelimiter();
+            string currentyearfile = FunctionTools.GetAFile();
+            char currentyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Console.WriteLine("-Enter Last Year Zip Counts file-");
-            string lasatyearfile = GetAFile();
-            char lastyeardeli = GetDelimiter();
+            string lasatyearfile = FunctionTools.GetAFile();
+            char lastyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             //Console.Write("Current Vintage Year: ");
@@ -1156,13 +1156,13 @@ namespace FileManipulations
 
             char txtq = '"';
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
             }
 
-            string percentdifffile = filefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
+            string percentdifffile = filefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
 
             //Dictionary<string, int> currentyeardata = new Dictionary<string, int>();
             Dictionary<string, Dictionary<string, int>> currentyeardata = new Dictionary<string, Dictionary<string, int>>();
@@ -1179,7 +1179,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -1224,7 +1224,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -1303,13 +1303,13 @@ namespace FileManipulations
         static public void MichelinPOLKPolkKeyCountsDiffReader()
         {
             Console.WriteLine("-Enter Current Year PolkKey Counts file-");
-            string currentyearfile = GetAFile();
-            char currentyeardeli = GetDelimiter();
+            string currentyearfile = FunctionTools.GetAFile();
+            char currentyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Console.WriteLine("-Enter Last Year PolkKey Counts file-");
-            string lasatyearfile = GetAFile();
-            char lastyeardeli = GetDelimiter();
+            string lasatyearfile = FunctionTools.GetAFile();
+            char lastyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             //Console.Write("Current Vintage Year: ");
@@ -1317,13 +1317,13 @@ namespace FileManipulations
 
             char txtq = '"';
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
             }
 
-            string percentdifffile = filefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
+            string percentdifffile = filefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
 
             Dictionary<string, int> currentyeardata = new Dictionary<string, int>();
             Dictionary<string, int> lastyeardata = new Dictionary<string, int>();
@@ -1339,7 +1339,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -1373,7 +1373,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -1434,13 +1434,13 @@ namespace FileManipulations
         static public void MichelinPOLKStateCountsDiffReader() // same code as MIchelinPolkKeyCountsDiffReader() just uses state names instead of polk key.
         {
             Console.WriteLine("-Enter Current Year State Counts file-");
-            string currentyearfile = GetAFile();
-            char currentyeardeli = GetDelimiter();
+            string currentyearfile = FunctionTools.GetAFile();
+            char currentyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Console.WriteLine("-Enter Last Year State Counts file-");
-            string lasatyearfile = GetAFile();
-            char lastyeardeli = GetDelimiter();
+            string lasatyearfile = FunctionTools.GetAFile();
+            char lastyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             //Console.Write("Current Vintage Year: ");
@@ -1448,13 +1448,13 @@ namespace FileManipulations
 
             char txtq = '"';
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
             }
 
-            string percentdifffile = filefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
+            string percentdifffile = filefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
 
             Dictionary<string, int> currentyeardata = new Dictionary<string, int>();
             Dictionary<string, int> lastyeardata = new Dictionary<string, int>();
@@ -1470,7 +1470,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -1504,7 +1504,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -1570,18 +1570,18 @@ namespace FileManipulations
             // add check for 'blanks' -> change blanks to 'N/A'
 
             Console.WriteLine("-Enter Current Year Vehicle Data file-");
-            string file = GetAFile();
-            char deli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char deli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
             Console.WriteLine();
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
             }
 
-            string cleanedfile = filefolderpath + "\\" + GetFileNameWithoutExtension(file) + "cleaned.txt";
+            string cleanedfile = filefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "cleaned.txt";
 
             using (StreamReader vehiclecountsfile = new StreamReader(file))
             {
@@ -1593,7 +1593,7 @@ namespace FileManipulations
 
                     if (header.Contains(txtq))
                     {
-                        headersplitbuilder.AddRange(SplitLineWithTxtQualifier(header, deli, txtq, false));
+                        headersplitbuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(header, deli, txtq, false));
                     }
                     else
                     {
@@ -1611,7 +1611,7 @@ namespace FileManipulations
                         List<string> splitlinebuilder = new List<string>();
                         if (line.Contains(txtq))
                         {
-                            splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli, txtq, false));
+                            splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli, txtq, false));
                         }
                         else
                         {
@@ -1649,14 +1649,14 @@ namespace FileManipulations
 
             // stage_polk_lookup -> michelin_vehicle_data_201810.csv
             Console.WriteLine("- Enter Polk Vehicle Count File -");
-            string polkdatafile = GetAFile();
-            char polkdeli = GetDelimiter();
+            string polkdatafile = FunctionTools.GetAFile();
+            char polkdeli = FunctionTools.GetDelimiter();
 
             Console.WriteLine("- Enter Michelin Vehicle Count File -");
-            string michelindatafile = GetAFile();
-            char michelindeli = GetDelimiter();
+            string michelindatafile = FunctionTools.GetAFile();
+            char michelindeli = FunctionTools.GetDelimiter();
 
-            char txtq = GetTXTQualifier(); // "
+            char txtq = FunctionTools.GetTXTQualifier(); // "
 
             Console.Write("Current Vintage Year: ");
             string currentyear = Console.ReadLine().Trim();
@@ -1667,7 +1667,7 @@ namespace FileManipulations
             Dictionary<string, List<string>> polkvehiclenames = new Dictionary<string, List<string>>();
             Dictionary<string, List<string>> michelinvehiclenames = new Dictionary<string, List<string>>();
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
@@ -1687,10 +1687,10 @@ namespace FileManipulations
                 string model = "MODEL_NAME";
                 string trim = "TRIM_NAME";
 
-                int yearindex = ColumnIndex(header, polkdeli, year);
-                int makeindex = ColumnIndex(header, polkdeli, make);
-                int modelindex = ColumnIndex(header, polkdeli, model);
-                int trimindex = ColumnIndex(header, polkdeli, trim);
+                int yearindex = FunctionTools.ColumnIndex(header, polkdeli, year);
+                int makeindex = FunctionTools.ColumnIndex(header, polkdeli, make);
+                int modelindex = FunctionTools.ColumnIndex(header, polkdeli, model);
+                int trimindex = FunctionTools.ColumnIndex(header, polkdeli, trim);
 
                 string line = string.Empty;
                 int linecount = 0;
@@ -1699,7 +1699,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, polkdeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, polkdeli, txtq, false));
                     }
                     else
                     {
@@ -1748,10 +1748,10 @@ namespace FileManipulations
                 string model = "MODEL_NAME";
                 string trim = "TRIM_NAME";
 
-                int yearindex = ColumnIndex(header, polkdeli, year);
-                int makeindex = ColumnIndex(header, polkdeli, make);
-                int modelindex = ColumnIndex(header, polkdeli, model);
-                int trimindex = ColumnIndex(header, polkdeli, trim);
+                int yearindex = FunctionTools.ColumnIndex(header, polkdeli, year);
+                int makeindex = FunctionTools.ColumnIndex(header, polkdeli, make);
+                int modelindex = FunctionTools.ColumnIndex(header, polkdeli, model);
+                int trimindex = FunctionTools.ColumnIndex(header, polkdeli, trim);
 
                 string line = string.Empty;
                 int linecount = 0;
@@ -1760,7 +1760,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, michelindeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, michelindeli, txtq, false));
                     }
                     else
                     {
@@ -1941,17 +1941,17 @@ namespace FileManipulations
             // non-matches are listed as "tpseg" , "no match" in appropriate columns
 
             Console.WriteLine("-Enter US Usage File-");
-            string ususagefile = GetAFile();
-            char ususagedeli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string ususagefile = FunctionTools.GetAFile();
+            char ususagedeli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine();
             Console.WriteLine("-Enter US Summary File-");
-            string ussummaryfile = GetAFile();
-            char ussummarydeli = GetDelimiter();
+            string ussummaryfile = FunctionTools.GetAFile();
+            char ussummarydeli = FunctionTools.GetDelimiter();
             // char txtq = GetTXTQualifier();
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
@@ -1978,7 +1978,7 @@ namespace FileManipulations
 
                 try
                 {
-                    tpsegindex = ColumnIndexWithQualifier(header, ususagedeli, txtq, tpsegname);
+                    tpsegindex = FunctionTools.ColumnIndexWithQualifier(header, ususagedeli, txtq, tpsegname);
                 }
                 catch (Exception exception)
                 {
@@ -1991,7 +1991,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, ususagedeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, ususagedeli, txtq, false));
                     }
                     else
                     {
@@ -2019,7 +2019,7 @@ namespace FileManipulations
 
                 try
                 {
-                    tpsegindex = ColumnIndexWithQualifier(header, ususagedeli, txtq, tpsegname);
+                    tpsegindex = FunctionTools.ColumnIndexWithQualifier(header, ususagedeli, txtq, tpsegname);
                 }
                 catch (Exception exception)
                 {
@@ -2032,7 +2032,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, ususagedeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, ususagedeli, txtq, false));
                     }
                     else
                     {
@@ -2089,17 +2089,17 @@ namespace FileManipulations
             // look at TIRE_SIZES. then compare on tire size + group category,
 
             Console.WriteLine("-Enter ACTIVE MSPN File-");
-            string activemspnfile = GetAFile();
-            char activemspndeli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string activemspnfile = FunctionTools.GetAFile();
+            char activemspndeli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine();
             Console.WriteLine("-Enter US Summary File-");
-            string ussummaryfile = GetAFile();
-            char ussummarydeli = GetDelimiter();
+            string ussummaryfile = FunctionTools.GetAFile();
+            char ussummarydeli = FunctionTools.GetDelimiter();
             // char txtq = GetTXTQualifier();
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_uspolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_uspolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
@@ -2128,8 +2128,8 @@ namespace FileManipulations
 
                 string tirecolumnname = "TIRE_SIZE";
                 string groupcolumnname = "GROUPE_CATEGORY";
-                int tiresizecolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
-                int groupcolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
+                int tiresizecolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
+                int groupcolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
 
                 string line = string.Empty;
                 while ((line = amspnfile.ReadLine()) != null)
@@ -2137,7 +2137,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
                     }
                     else
                     {
@@ -2170,8 +2170,8 @@ namespace FileManipulations
 
                 string tirecolumnname = "Standard_Tire_Size";
                 string groupcolumnname = "Group_Cat";
-                int tiresizecolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
-                int groupcolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
+                int tiresizecolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
+                int groupcolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
 
                 string line = string.Empty;
                 while ((line = summaryfile.ReadLine()) != null)
@@ -2179,7 +2179,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
                     }
                     else
                     {
@@ -2362,9 +2362,9 @@ namespace FileManipulations
         static public void MichelinCanadaPOLKReaderMultiTask()
         {
             // create directory for splitfiles.
-            string splitfilefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts\splitfiles";
-            string fsafilefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts\fsacounts";
-            string polkfilefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts\polkcounts";
+            string splitfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts\splitfiles";
+            string fsafilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts\fsacounts";
+            string polkfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts\polkcounts";
 
             if (!Directory.Exists(splitfilefolderpath))
             {
@@ -2386,7 +2386,7 @@ namespace FileManipulations
             Console.Write("File: ");
             var inFile = new FileInfo(Console.ReadLine());
             //var polkziplistfile = Console.ReadLine();
-            char deli = GetDelimiter();
+            char deli = FunctionTools.GetDelimiter();
             char txtq = '"';
             Console.WriteLine();
 
@@ -2436,8 +2436,8 @@ namespace FileManipulations
             string[] michelinfsadatafilepaths = Directory.GetFiles(@splitfilefolderpath);
 
             Console.WriteLine("-Enter Province file-");
-            string statefile = GetAFile();
-            char statedeli = GetDelimiter();
+            string statefile = FunctionTools.GetAFile();
+            char statedeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Dictionary<string, HashSet<string>> provincefsadictionary = new Dictionary<string, HashSet<string>>();
@@ -2452,7 +2452,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, statedeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, statedeli, txtq, false));
                     }
                     else
                     {
@@ -2521,11 +2521,11 @@ namespace FileManipulations
 
         static public Task<string> MichelinCanadaPOLKfsaDataReader(string file1, char deli1, char txtq, Dictionary<string, HashSet<string>> provincelookup)
         {
-            string fsafilefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts\fsacounts";
-            string polkfilefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts\polkcounts";
+            string fsafilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts\fsacounts";
+            string polkfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts\polkcounts";
 
-            string fsacountsfile = fsafilefolderpath + "\\" + GetFileNameWithoutExtension(file1) + "fsa_counts.txt"; // list of zips, appended with counts
-            string polkcountsfile = polkfilefolderpath + "\\" + GetFileNameWithoutExtension(file1) + "polk_counts.txt";
+            string fsacountsfile = fsafilefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(file1) + "fsa_counts.txt"; // list of zips, appended with counts
+            string polkcountsfile = polkfilefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(file1) + "polk_counts.txt";
 
             Dictionary<string, int> fsalist = new Dictionary<string, int>();
             Dictionary<string, int> polkkeysums = new Dictionary<string, int>();
@@ -2543,7 +2543,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli1, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli1, txtq, false));
                     }
                     else
                     {
@@ -2649,7 +2649,7 @@ namespace FileManipulations
             char txtq = '"';
             Console.WriteLine();
 
-            string splitfilefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts\";
+            string splitfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts\";
             string polkcountsfile = splitfilefolderpath + "\\" + "polk_counts.txt";
 
             Dictionary<string, int> canadapolkcounts = new Dictionary<string, int>();
@@ -2666,7 +2666,7 @@ namespace FileManipulations
                         List<string> splitlinebuilder = new List<string>();
                         if (line.Contains(txtq))
                         {
-                            splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli, txtq, false));
+                            splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli, txtq, false));
                         }
                         else
                         {
@@ -2715,7 +2715,7 @@ namespace FileManipulations
             char txtq = '"';
             Console.WriteLine();
 
-            string splitfilefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts\";
+            string splitfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts\";
             string fsacountsfile = splitfilefolderpath + "\\" + "fsa_counts.txt";
             string provincecountsfile = splitfilefolderpath + "\\" + "province_counts.txt";
 
@@ -2735,7 +2735,7 @@ namespace FileManipulations
                         List<string> splitlinebuilder = new List<string>();
                         if (line.Contains(txtq))
                         {
-                            splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli, txtq, false));
+                            splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli, txtq, false));
                         }
                         else
                         {
@@ -2823,24 +2823,24 @@ namespace FileManipulations
             // use previously created fsa counts files.
 
             Console.WriteLine("-Enter Current Year FSA Counts file-");
-            string currentyearfile = GetAFile();
-            char currentyeardeli = GetDelimiter();
+            string currentyearfile = FunctionTools.GetAFile();
+            char currentyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Console.WriteLine("-Enter Last Year FSA Counts file-");
-            string lasatyearfile = GetAFile();
-            char lastyeardeli = GetDelimiter();
+            string lasatyearfile = FunctionTools.GetAFile();
+            char lastyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             char txtq = '"';
-            string splitfilefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string splitfilefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(splitfilefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(splitfilefolderpath);
             }
 
-            string newfsalist = splitfilefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_newfsas.txt";
-            string droppedfsalist = splitfilefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_drops.txt";
+            string newfsalist = splitfilefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_newfsas.txt";
+            string droppedfsalist = splitfilefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_drops.txt";
 
             HashSet<string> newfsas = new HashSet<string>();
             HashSet<string> droppedfsas = new HashSet<string>();
@@ -2864,7 +2864,7 @@ namespace FileManipulations
 
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -2893,7 +2893,7 @@ namespace FileManipulations
 
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -2931,7 +2931,7 @@ namespace FileManipulations
 
                 if (header.Contains(txtq))
                 {
-                    splitlinebuilder.AddRange(SplitLineWithTxtQualifier(header, currentyeardeli, txtq, false));
+                    splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(header, currentyeardeli, txtq, false));
                 }
                 else
                 {
@@ -2954,7 +2954,7 @@ namespace FileManipulations
 
                 if (header.Contains(txtq))
                 {
-                    splitlinebuilder.AddRange(SplitLineWithTxtQualifier(header, currentyeardeli, txtq, false));
+                    splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(header, currentyeardeli, txtq, false));
                 }
                 else
                 {
@@ -2975,13 +2975,13 @@ namespace FileManipulations
         static public void MichelinCanadaPOLKfsaCountsDiffReader()
         {
             Console.WriteLine("-Enter Current Year fsa Counts file-");
-            string currentyearfile = GetAFile();
-            char currentyeardeli = GetDelimiter();
+            string currentyearfile = FunctionTools.GetAFile();
+            char currentyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Console.WriteLine("-Enter Last Year fsa Counts file-");
-            string lasatyearfile = GetAFile();
-            char lastyeardeli = GetDelimiter();
+            string lasatyearfile = FunctionTools.GetAFile();
+            char lastyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             //Console.Write("Current Vintage Year: ");
@@ -2989,13 +2989,13 @@ namespace FileManipulations
 
             char txtq = '"';
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
             }
 
-            string percentdifffile = filefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
+            string percentdifffile = filefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
 
             //Dictionary<string, int> currentyeardata = new Dictionary<string, int>();
             Dictionary<string, Dictionary<string, int>> currentyeardata = new Dictionary<string, Dictionary<string, int>>();
@@ -3012,7 +3012,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -3057,7 +3057,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -3136,24 +3136,24 @@ namespace FileManipulations
         static public void MichelinCanadaPOLKPolkKeyCountsDiffReader() //mirror code of us method
         {
             Console.WriteLine("-Enter Current Year PolkKey Counts file-");
-            string currentyearfile = GetAFile();
-            char currentyeardeli = GetDelimiter();
+            string currentyearfile = FunctionTools.GetAFile();
+            char currentyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Console.WriteLine("-Enter Last Year PolkKey Counts file-");
-            string lasatyearfile = GetAFile();
-            char lastyeardeli = GetDelimiter();
+            string lasatyearfile = FunctionTools.GetAFile();
+            char lastyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             char txtq = '"';
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
             }
 
-            string percentdifffile = filefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
+            string percentdifffile = filefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
 
             Dictionary<string, int> currentyeardata = new Dictionary<string, int>();
             Dictionary<string, int> lastyeardata = new Dictionary<string, int>();
@@ -3169,7 +3169,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -3203,7 +3203,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -3264,13 +3264,13 @@ namespace FileManipulations
         static public void MichelinCanadaPOLKProvinceCountsDiffReader() // same code as MIchelinCanadaPolkKeyCountsDiffReader() just uses province names instead of polk key.
         {
             Console.WriteLine("-Enter Current Year Province Counts file-");
-            string currentyearfile = GetAFile();
-            char currentyeardeli = GetDelimiter();
+            string currentyearfile = FunctionTools.GetAFile();
+            char currentyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             Console.WriteLine("-Enter Last Year Province Counts file-");
-            string lasatyearfile = GetAFile();
-            char lastyeardeli = GetDelimiter();
+            string lasatyearfile = FunctionTools.GetAFile();
+            char lastyeardeli = FunctionTools.GetDelimiter();
             Console.WriteLine();
 
             //Console.Write("Current Vintage Year: ");
@@ -3278,13 +3278,13 @@ namespace FileManipulations
 
             char txtq = '"';
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
             }
 
-            string percentdifffile = filefolderpath + "\\" + GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
+            string percentdifffile = filefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(currentyearfile) + "_difs.csv";
 
             Dictionary<string, int> currentyeardata = new Dictionary<string, int>();
             Dictionary<string, int> lastyeardata = new Dictionary<string, int>();
@@ -3300,7 +3300,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -3334,7 +3334,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, currentyeardeli, txtq, false));
                     }
                     else
                     {
@@ -3399,18 +3399,18 @@ namespace FileManipulations
 
             // add check for 'blanks' -> change blanks to 'N/A'
             Console.WriteLine("-Enter Current Year Vehicle Data file-");
-            string file = GetAFile();
-            char deli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string file = FunctionTools.GetAFile();
+            char deli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
             Console.WriteLine();
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
             }
 
-            string cleanedfile = filefolderpath + "\\" + GetFileNameWithoutExtension(file) + "cleaned.txt";
+            string cleanedfile = filefolderpath + "\\" + FunctionTools.GetFileNameWithoutExtension(file) + "cleaned.txt";
 
             using (StreamReader vehiclecountsfile = new StreamReader(file))
             {
@@ -3422,7 +3422,7 @@ namespace FileManipulations
 
                     if (header.Contains(txtq))
                     {
-                        headersplitbuilder.AddRange(SplitLineWithTxtQualifier(header, deli, txtq, false));
+                        headersplitbuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(header, deli, txtq, false));
                     }
                     else
                     {
@@ -3440,7 +3440,7 @@ namespace FileManipulations
                         List<string> splitlinebuilder = new List<string>();
                         if (line.Contains(txtq))
                         {
-                            splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, deli, txtq, false));
+                            splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, deli, txtq, false));
                         }
                         else
                         {
@@ -3478,14 +3478,14 @@ namespace FileManipulations
 
             // stage_polk_lookup -> michelin_vehicle_data_201810.csv
             Console.WriteLine("- Enter Polk Vehicle Count File -");
-            string polkdatafile = GetAFile();
-            char polkdeli = GetDelimiter();
+            string polkdatafile = FunctionTools.GetAFile();
+            char polkdeli = FunctionTools.GetDelimiter();
 
             Console.WriteLine("- Enter Michelin Vehicle Count File -");
-            string michelindatafile = GetAFile();
-            char michelindeli = GetDelimiter();
+            string michelindatafile = FunctionTools.GetAFile();
+            char michelindeli = FunctionTools.GetDelimiter();
 
-            char txtq = GetTXTQualifier(); // "
+            char txtq = FunctionTools.GetTXTQualifier(); // "
 
             Console.Write("Current Vintage Year: ");
             string currentyear = Console.ReadLine().Trim();
@@ -3496,7 +3496,7 @@ namespace FileManipulations
             Dictionary<string, List<string>> polkvehiclenames = new Dictionary<string, List<string>>();
             Dictionary<string, List<string>> michelinvehiclenames = new Dictionary<string, List<string>>();
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
@@ -3516,10 +3516,10 @@ namespace FileManipulations
                 string model = "MODEL_NAME";
                 string trim = "TRIM_NAME";
 
-                int yearindex = ColumnIndex(header, polkdeli, year);
-                int makeindex = ColumnIndex(header, polkdeli, make);
-                int modelindex = ColumnIndex(header, polkdeli, model);
-                int trimindex = ColumnIndex(header, polkdeli, trim);
+                int yearindex = FunctionTools.ColumnIndex(header, polkdeli, year);
+                int makeindex = FunctionTools.ColumnIndex(header, polkdeli, make);
+                int modelindex = FunctionTools.ColumnIndex(header, polkdeli, model);
+                int trimindex = FunctionTools.ColumnIndex(header, polkdeli, trim);
 
                 string line = string.Empty;
                 int linecount = 0;
@@ -3528,7 +3528,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, polkdeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, polkdeli, txtq, false));
                     }
                     else
                     {
@@ -3577,10 +3577,10 @@ namespace FileManipulations
                 string model = "MODEL_NAME";
                 string trim = "TRIM_NAME";
 
-                int yearindex = ColumnIndex(header, polkdeli, year);
-                int makeindex = ColumnIndex(header, polkdeli, make);
-                int modelindex = ColumnIndex(header, polkdeli, model);
-                int trimindex = ColumnIndex(header, polkdeli, trim);
+                int yearindex = FunctionTools.ColumnIndex(header, polkdeli, year);
+                int makeindex = FunctionTools.ColumnIndex(header, polkdeli, make);
+                int modelindex = FunctionTools.ColumnIndex(header, polkdeli, model);
+                int trimindex = FunctionTools.ColumnIndex(header, polkdeli, trim);
 
                 string line = string.Empty;
                 int linecount = 0;
@@ -3589,7 +3589,7 @@ namespace FileManipulations
                     List<string> splitlinebuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        splitlinebuilder.AddRange(SplitLineWithTxtQualifier(line, michelindeli, txtq, false));
+                        splitlinebuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, michelindeli, txtq, false));
                     }
                     else
                     {
@@ -3773,17 +3773,17 @@ namespace FileManipulations
             // non-matches are listed as "tpseg" , "no match" in appropriate columns
 
             Console.WriteLine("-Enter Canada Usage File-");
-            string canadausagefile = GetAFile();
-            char canadausagedeli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string canadausagefile = FunctionTools.GetAFile();
+            char canadausagedeli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine();
             Console.WriteLine("-Enter Canada Summary File-");
-            string canadasummaryfile = GetAFile();
-            char canadasummarydeli = GetDelimiter();
+            string canadasummaryfile = FunctionTools.GetAFile();
+            char canadasummarydeli = FunctionTools.GetDelimiter();
             // char txtq = GetTXTQualifier();
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
@@ -3810,7 +3810,7 @@ namespace FileManipulations
 
                 try
                 {
-                    tpsegindex = ColumnIndexWithQualifier(header, canadausagedeli, txtq, tpsegname);
+                    tpsegindex = FunctionTools.ColumnIndexWithQualifier(header, canadausagedeli, txtq, tpsegname);
                 }
                 catch (Exception exception)
                 {
@@ -3823,7 +3823,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, canadausagedeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, canadausagedeli, txtq, false));
                     }
                     else
                     {
@@ -3851,7 +3851,7 @@ namespace FileManipulations
 
                 try
                 {
-                    tpsegindex = ColumnIndexWithQualifier(header, canadausagedeli, txtq, tpsegname);
+                    tpsegindex = FunctionTools.ColumnIndexWithQualifier(header, canadausagedeli, txtq, tpsegname);
                 }
                 catch (Exception exception)
                 {
@@ -3864,7 +3864,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, canadausagedeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, canadausagedeli, txtq, false));
                     }
                     else
                     {
@@ -3924,17 +3924,17 @@ namespace FileManipulations
             // non-matches are listed as "tpseg" , "no match" in appropriate columns
 
             Console.WriteLine("-Enter Canada Winter Usage File-");
-            string canadausagefile = GetAFile();
-            char canadausagedeli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string canadausagefile = FunctionTools.GetAFile();
+            char canadausagedeli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine();
             Console.WriteLine("-Enter Canada Winter Summary File-");
-            string canadasummaryfile = GetAFile();
-            char canadasummarydeli = GetDelimiter();
+            string canadasummaryfile = FunctionTools.GetAFile();
+            char canadasummarydeli = FunctionTools.GetDelimiter();
             // char txtq = GetTXTQualifier();
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
@@ -3961,7 +3961,7 @@ namespace FileManipulations
 
                 try
                 {
-                    tpsegindex = ColumnIndexWithQualifier(header, canadausagedeli, txtq, tpsegname);
+                    tpsegindex = FunctionTools.ColumnIndexWithQualifier(header, canadausagedeli, txtq, tpsegname);
                 }
                 catch (Exception exception)
                 {
@@ -3974,7 +3974,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, canadausagedeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, canadausagedeli, txtq, false));
                     }
                     else
                     {
@@ -4002,7 +4002,7 @@ namespace FileManipulations
 
                 try
                 {
-                    tpsegindex = ColumnIndexWithQualifier(header, canadausagedeli, txtq, tpsegname);
+                    tpsegindex = FunctionTools.ColumnIndexWithQualifier(header, canadausagedeli, txtq, tpsegname);
                 }
                 catch (Exception exception)
                 {
@@ -4015,7 +4015,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, canadausagedeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, canadausagedeli, txtq, false));
                     }
                     else
                     {
@@ -4072,23 +4072,23 @@ namespace FileManipulations
             // look at TIRE_SIZES. then compare on tire size + group category,
 
             Console.WriteLine("-Enter ACTIVE MSPN File-");
-            string activemspnfile = GetAFile();
-            char activemspndeli = GetDelimiter();
-            char txtq = GetTXTQualifier();
+            string activemspnfile = FunctionTools.GetAFile();
+            char activemspndeli = FunctionTools.GetDelimiter();
+            char txtq = FunctionTools.GetTXTQualifier();
 
             Console.WriteLine();
             Console.WriteLine("-Enter Canada Summary File-");
-            string canadasummaryfile = GetAFile();
-            char canadasummarydeli = GetDelimiter();
+            string canadasummaryfile = FunctionTools.GetAFile();
+            char canadasummarydeli = FunctionTools.GetDelimiter();
             // char txtq = GetTXTQualifier();
 
             Console.WriteLine();
             Console.WriteLine("-Enter Canada Winter Summary File-");
-            string canadasummarywinterfile = GetAFile();
-            char canadasummarywinterdeli = GetDelimiter();
+            string canadasummarywinterfile = FunctionTools.GetAFile();
+            char canadasummarywinterdeli = FunctionTools.GetDelimiter();
 
 
-            string filefolderpath = GetDesktopDirectory() + @"\michelin_canadapolk_counts";
+            string filefolderpath = FunctionTools.GetDesktopDirectory() + @"\michelin_canadapolk_counts";
             if (!Directory.Exists(filefolderpath))
             {
                 DirectoryInfo di = Directory.CreateDirectory(filefolderpath);
@@ -4114,8 +4114,8 @@ namespace FileManipulations
 
                 string tirecolumnname = "TIRE_SIZE";
                 string groupcolumnname = "GROUPE_CATEGORY";
-                int tiresizecolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
-                int groupcolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
+                int tiresizecolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
+                int groupcolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
 
                 string line = string.Empty;
                 while ((line = amspnfile.ReadLine()) != null)
@@ -4123,7 +4123,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
                     }
                     else
                     {
@@ -4156,8 +4156,8 @@ namespace FileManipulations
 
                 string tirecolumnname = "Standard_Tire_Size";
                 string groupcolumnname = "Group Cat";
-                int tiresizecolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
-                int groupcolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
+                int tiresizecolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
+                int groupcolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
 
                 string line = string.Empty;
                 while ((line = summaryfile.ReadLine()) != null)
@@ -4165,7 +4165,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
                     }
                     else
                     {
@@ -4198,8 +4198,8 @@ namespace FileManipulations
 
                 string tirecolumnname = "Standard_Tire_Size";
                 string groupcolumnname = "Group Cat";
-                int tiresizecolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
-                int groupcolumn = ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
+                int tiresizecolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, tirecolumnname);
+                int groupcolumn = FunctionTools.ColumnIndexWithQualifier(header, activemspndeli, txtq, groupcolumnname);
 
                 string line = string.Empty;
                 while ((line = wintersummaryfile.ReadLine()) != null)
@@ -4207,7 +4207,7 @@ namespace FileManipulations
                     List<string> arraybuilder = new List<string>();
                     if (line.Contains(txtq))
                     {
-                        arraybuilder.AddRange(SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
+                        arraybuilder.AddRange(FunctionTools.SplitLineWithTxtQualifier(line, activemspndeli, txtq, false));
                     }
                     else
                     {
