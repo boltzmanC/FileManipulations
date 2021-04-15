@@ -14,8 +14,6 @@ namespace FileManipulations
     {
 
         // Michelin Monthly File Testing
-        //****************************************************************************************************************************************************
-        //****************************************************************************************************************************************************
         public static void MichelinMonthlyFileCleaner()
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -249,24 +247,33 @@ namespace FileManipulations
                         //test column values.
                         List<string> failreport = new List<string>();
 
-                        // unique customer id
-                        int number = 0;
-                        if (!int.TryParse(splitline[uniquecustidcolumn], out number))
+                        if (splitline.Length < headersplit.Length)
                         {
-                            failreport.Add("Unique Customer Id, not a number - " + splitline[uniquecustidcolumn]);
+                            failreport.Add("Line does not have enough fields - " + line);
+                        }
+                        else
+                        {
+
+                            // unique customer id
+                            int number = 0;
+                            if (!int.TryParse(splitline[uniquecustidcolumn], out number))
+                            {
+                                failreport.Add("Unique Customer Id, not a number - " + splitline[uniquecustidcolumn]);
+                            }
+
+                            // year.
+                            if (splitline[yearcolumn] != year)
+                            {
+                                failreport.Add("Year, does not match - " + splitline[yearcolumn]);
+                            }
+
+                            // month.
+                            if (splitline[monthcolumn] != month)
+                            {
+                                failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            }
                         }
 
-                        // year.
-                        if (splitline[yearcolumn] != year)
-                        {
-                            failreport.Add("Year, does not match - " + splitline[yearcolumn]);
-                        }
-
-                        // month.
-                        if (splitline[monthcolumn] != month)
-                        {
-                            failreport.Add("Month, does not match - " + splitline[monthcolumn]);
-                        }
 
                         //outputs.
                         if (failreport.Count == 0)
@@ -421,29 +428,36 @@ namespace FileManipulations
                         //test column values.
                         List<string> failreport = new List<string>();
 
-                        //number columns
-                        foreach (var index in numbercolumnslist)
+                        if (splitline.Length < headersplit.Length)
                         {
-                            int number = 0;
-                            if (!string.IsNullOrWhiteSpace(splitline[index]))
+                            failreport.Add("Line does not have enough fields - " + line );
+                        }
+                        else
+                        {
+                            //number columns
+                            foreach (var index in numbercolumnslist)
                             {
-                                if (!int.TryParse(splitline[index], out number))
+                                int number = 0;
+                                if (!string.IsNullOrWhiteSpace(splitline[index]))
                                 {
-                                    failreport.Add(newcolumns[index] + ", not a number - " + splitline[index]);
+                                    if (!int.TryParse(splitline[index], out number))
+                                    {
+                                        failreport.Add(newcolumns[index] + ", not a number - " + splitline[index]);
+                                    }
                                 }
                             }
-                        }
 
-                        // year.
-                        if (splitline[yearcolumn] != year)
-                        {
-                            failreport.Add("Year, does not match - " + splitline[yearcolumn]);
-                        }
+                            // year.
+                            if (splitline[yearcolumn] != year)
+                            {
+                                failreport.Add("Year, does not match - " + splitline[yearcolumn]);
+                            }
 
-                        // month.
-                        if (splitline[monthcolumn] != month)
-                        {
-                            failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            // month.
+                            if (splitline[monthcolumn] != month)
+                            {
+                                failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            }
                         }
 
                         //outputs.
@@ -594,25 +608,32 @@ namespace FileManipulations
                         //test column values.
                         List<string> failreport = new List<string>();
 
-                        //number columns
-                        foreach (var index in numbercolumnslist)
+                        if (splitline.Length < headersplit.Length)
                         {
-                            decimal number = 0;
-                            if (!string.IsNullOrWhiteSpace(splitline[index]))
+                            failreport.Add("Line does not have enough fields - " + line);
+                        }
+                        else
+                        {
+                            //number columns
+                            foreach (var index in numbercolumnslist)
                             {
-                                if (!decimal.TryParse(splitline[index], out number))
+                                decimal number = 0;
+                                if (!string.IsNullOrWhiteSpace(splitline[index]))
                                 {
-                                    failreport.Add(newcolumns[index] + ", not a number - " + splitline[index]);
+                                    if (!decimal.TryParse(splitline[index], out number))
+                                    {
+                                        failreport.Add(newcolumns[index] + ", not a number - " + splitline[index]);
+                                    }
                                 }
                             }
-                        }
 
-                        // month.
-                        if (splitline[monthcolumn] != month)
-                        {
-                            failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            // month.
+                            if (splitline[monthcolumn] != month)
+                            {
+                                failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            }
+                            
                         }
-
                         //outputs.
                         if (failreport.Count == 0)
                         {
@@ -757,23 +778,32 @@ namespace FileManipulations
                         //test column values.
                         List<string> failreport = new List<string>();
 
-                        // unique customer id
-                        int number = 0;
-                        if (!int.TryParse(splitline[uniquecustidcolumn], out number))
+                        if (splitline.Length < headersplit.Length)
                         {
-                            failreport.Add("Unique Customer Id, not a number - " + splitline[uniquecustidcolumn]);
+                            failreport.Add("Line does not have enough fields - " + line);
                         }
-
-                        // year.
-                        if (splitline[yearcolumn] != year)
+                        else
                         {
-                            failreport.Add("Year, does not match - " + splitline[yearcolumn]);
-                        }
+                            // unique customer id
+                            int number = 0;
+                            if (!int.TryParse(splitline[uniquecustidcolumn], out number))
+                            {
+                                failreport.Add("Unique Customer Id, not a number - " + splitline[uniquecustidcolumn]);
+                            }
 
-                        // month.
-                        if (splitline[monthcolumn] != month)
-                        {
-                            failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            // year.
+                            if (splitline[yearcolumn] != year)
+                            {
+                                failreport.Add("Year, does not match - " + splitline[yearcolumn]);
+                            }
+
+                            // month.
+                            if (splitline[monthcolumn] != month)
+                            {
+                                failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            }
+
+                            
                         }
 
                         //outputs.
@@ -918,17 +948,27 @@ namespace FileManipulations
 
                         //test column values.
                         List<string> failreport = new List<string>();
-                        // year.
-                        if (splitline[yearcolumn] != year)
-                        {
-                            failreport.Add("Year, does not match - " + splitline[yearcolumn]);
-                        }
 
-                        // month.
-                        if (splitline[monthcolumn] != month)
+                        if (splitline.Length < headersplit.Length)
                         {
-                            failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            failreport.Add("Line does not have enough fields - " + line);
                         }
+                        else
+                        {
+                            
+                            // year.
+                            if (splitline[yearcolumn] != year)
+                            {
+                                failreport.Add("Year, does not match - " + splitline[yearcolumn]);
+                            }
+
+                            // month.
+                            if (splitline[monthcolumn] != month)
+                            {
+                                failreport.Add("Month, does not match - " + splitline[monthcolumn]);
+                            }
+                        }
+                        
 
                         //outputs.
                         if (failreport.Count == 0)
