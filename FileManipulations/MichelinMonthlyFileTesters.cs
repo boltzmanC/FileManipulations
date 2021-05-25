@@ -12,6 +12,18 @@ namespace FileManipulations
 {
     public class MichelinMonthlyFileTesters
     {
+        //TODO
+        // add test methods to  be called from each file test case
+        //      number
+        //      date
+        //      line length
+        // add try catch blocks to each file test so that program will execute and log errors encountered instead of just executing
+        //      add data logger to output log file for qa.
+        // add correct column headers to refernce file?? 
+        // refine runtime console logging. provide user with more information on what is going on. 
+        // add recommendation to load / not load based on # of failed records
+
+
 
         // Michelin Monthly File Testing
         public static void MichelinMonthlyFileCleaner()

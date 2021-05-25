@@ -16,110 +16,99 @@ namespace FileManipulations
     {
         static void Main(string[] args)
         {
-            Console.SetWindowSize(150, 45);
-            int bufferwidth = Console.BufferWidth;
-            int bufferheight = 600;
-            Console.SetBufferSize(bufferwidth, bufferheight);
+            FunctionTools.ConsoleSettings();
 
 
-            // Main Menu
+            // Main Menu -----------------------------------------------
+            FileFormatCheckerFixers.FileFormatCheckerFixer();
+
+            // Michelin Monthly File Tester -----------------------------
+            //MichelinMonthlyFileTesters.MichelinMonthlyFileCleaner();
 
 
-            //FileFormatCheckerFixers.FileFormatCheckerFixer();
+            // Manual running File Processes -------------
 
-            MichelinMonthlyFileTesters.MichelinMonthlyFileCleaner();
-
-
-            // Manual running-------------
-
-            //AddStringToColumnValues();
-            //AddStringAsNewColumnValue();
-            //AppendValueToEachLineInFile();
-            //BGToZipUrbanicityAverage();
-            //BehaviorAnalyzerSorting();
-            //CopyColumnToNewFile();
-            //CopyColumnsToNewFile(); //better.
-            //CombineFiles();
-            //CSTUsageMetricsFilter();
-            //Dedupesaveextravalues();
-            //EditLineInListOfFiles();
-            //FileInfo();
-            //FindDatesBeforeX();
-            //FindIDsInTwoFiles();
-            //FixedWidthToPipeDelimited();
-            //FormatDateColumn();
-            //FormatZipCodesAddLeadingZeroes();
-            //NumericValueCheck();
-            //PullBlankEmptyOrZeroValueRecords();
-            //PullRecordsWithORListofStringorChars();
-            //PullRecordsWithValueInColumn_s();
-            //PullRecordsWithValueXInColumnY();
-            //PullRandomSubsetofLengthX();
-            //ReadTwoLines();
-            //RemoveDataFromColumn();
-            //UniqueValueCheck();
-            //SkipUserSpecifiedLines();
-            //SuperStringStripper();
-            //TestColumnNamesFromDefinitionFile();
-            //VlookupAppendColumn(); //does not accept files with text qualifiers
-            //VLookupAppendColumnRows();
-            //VlookupKeepNotFoundFromOriginalFile();
-            //XLSXToCSV();
+            //FileFormatCheckerFixers.AddStringToColumnValues();
+            //FileFormatCheckerFixers.AddStringAsNewColumnValue();
+            //FileFormatCheckerFixers.AppendValueToEachLineInFile();
+            //FileFormatCheckerFixers.CopyColumnsToNewFile();
+            //FileFormatCheckerFixers.CopyColumnsWithValueToNewFile();
+            //FileFormatCheckerFixers.CombineFiles();
+            //FileFormatCheckerFixers.Dedupesaveextravalues();
+            //FileFormatCheckerFixers.FormatDateColumn();
+            //FileFormatCheckerFixers.FormatZipCodesAddLeadingZeroes();
+            //FileFormatCheckerFixers.PullBlankEmptyOrZeroValueRecords();
+            //FileFormatCheckerFixers.PullRecordsWithORListofStringorChars();
+            //FileFormatCheckerFixers.PullRecordsWithValueInColumn_s();
+            //FileFormatCheckerFixers.PullRecordsWithValueXInColumnY();
+            //FileFormatCheckerFixers.PullRandomSubsetofLengthX();
+            //FileFormatCheckerFixers.RemoveDataFromColumn();
+            //FileFormatCheckerFixers.UniqueValueCheck();
+            //FileFormatCheckerFixers.SuperStringStripper();
+            //FileFormatCheckerFixers.TestColumnNamesFromDefinitionFile();
+            //FileFormatCheckerFixers.VlookupAppendColumn(); //does not accept files with text qualifiers
+            //FileFormatCheckerFixers.VLookupAppendColumnRows();
+            //FileFormatCheckerFixers.VlookupKeepNotFoundFromOriginalFile();
 
 
-            //CostarPointsFiles(); //add check for unique variable IDS first.
-            //CostarPointsFilesManualCheck();
+            // one time use may need adjusting per run -------------------
 
-            //CostarAreaFiles();
-            //CostarAreaFilesManualCheck();
-            //CostarAreaFilesSummaries(); //sums total variable values.. should be less than or eqaul to national totals.
+            //SingleUse.NumericValueCheck();
+            //SingleUse.FindIDsInTwoFiles();
+            //SingleUse.BGToZipUrbanicityAverage();
+            //SingleUse.BehaviorAnalyzerSorting();
+            //SingleUse.CSTUsageMetricsFilter();
+            //SingleUse.EditLineInListOfFiles();
+            //SingleUse.FindDatesBeforeX();
+            //SingleUse.FixedWidthToPipeDelimited();
+            //SingleUse.ReadTwoLines();
+            //SingleUse.SkipUserSpecifiedLines();
 
-            //CoStarUSManualTestGapFile();
 
-            //CostarCanadaTestGapFile();
-            //CostarCanadaManualTestGapfile();
-            //CostarCanadaReformatNightlyFeedOutput();
+            //Costar ---------------------------------
+            //CoStarTester.CostarPointsFiles(); //add check for unique variable IDS first.
+            //CoStarTester.CostarPointsFilesManualCheck();
 
-            //CostarSumDataColumns();
+            //CoStarTester.CostarAreaFiles();
+            //CoStarTester.CostarAreaFilesManualCheck();
+            //CoStarTester.CostarAreaFilesSummaries(); //sums total variable values.. should be less than or eqaul to national totals.
 
-            //Michelin Monthly testing...
-            //MichelinMonthlyFileCleaner();
+            //CoStarTester.CoStarUSManualTestGapFile();
 
-            //Michelin Polk tables
-            //MichelinPOLKZipReaderMultiTask();
-            //
-            //MichelinPOLKNewZipFinder();
-            //
-            //MichelinPOLKZipCountsDiffReader();
-            //MichelinPOLKPolkKeyCountsDiffReader();
-            //MichelinPOLKStateCountsDiffReader();
-            //
-            //MichelinPOLKVehicleInfoFileCleaner();
-            //MichelinPOLKMichelintoPolkCrossWalk();
-            //MichelinPOLKTirePotentialSegmentChecker();
-            //
-            //MichelinPOLKGroupCatChecker();
-            //
-            //michelin canada
-            //MichelinCanadaPOLKReaderMultiTask();
+            //CoStarTester.CostarSumDataColumns();
 
-            //MichelinCanadaPOLKNewfsaFinder();
-            //MichelinCanadaPOLKfsaCountsDiffReader();
-            //MichelinCanadaPOLKPolkKeyCountsDiffReader();
-            //MichelinCanadaPOLKProvinceCountsDiffReader();
-            //MichelinCanadaPOLKVehicleInfoFileCleaner();
-            //MichelinCanadaPOLKMichelintoPolkCrossWalk();
-            //MichelinCanadaPOLKTirePotentialSegmentChecker();
-            //MichelinCanadaPOLKTirePotentialSegmentCheckerWINTER();
-            //MichelinCanadaPOLKGroupCatChecker();
+            // CoStar Canada --------------------------------
+            //CoStarTester.CostarCanadaTestGapFile();
+            //CoStarTester.CostarCanadaManualTestGapfile();
+            //CoStarTester.CostarCanadaReformatNightlyFeedOutput();
 
-            //foreach (KeyValuePair<string, List<string>> entry in dict)
 
-            //Collapse all methods -> CTRL + M CTRL + O
+
+            // Michelin Polk tables ----------------------------
+            //MichelinAnnualTester.MichelinPOLKReaderMultiTask();
+
+            //MichelinAnnualTester.MichelinPOLKNewZipFinder();
+            //MichelinAnnualTester.MichelinPOLKZipCountsDiffReader();
+            //MichelinAnnualTester.MichelinPOLKPolkKeyCountsDiffReader();
+            //MichelinAnnualTester.MichelinPOLKStateCountsDiffReader();
+            //MichelinAnnualTester.MichelinPOLKVehicleInfoFileCleaner();
+            //MichelinAnnualTester.MichelinPOLKMichelintoPolkCrossWalk();
+            //MichelinAnnualTester.MichelinPOLKTirePotentialSegmentChecker();
+            //MichelinAnnualTester.MichelinPOLKGroupCatChecker();
+
+            // michelin canada --------------------
+            //MichelinAnnualTester.MichelinCanadaPOLKReaderMultiTask();
+
+            //MichelinAnnualTester.MichelinCanadaPOLKNewfsaFinder();
+            //MichelinAnnualTester.MichelinCanadaPOLKfsaCountsDiffReader();
+            //MichelinAnnualTester.MichelinCanadaPOLKPolkKeyCountsDiffReader();
+            //MichelinAnnualTester.MichelinCanadaPOLKProvinceCountsDiffReader();
+            //MichelinAnnualTester.MichelinCanadaPOLKVehicleInfoFileCleaner();
+            //MichelinAnnualTester.MichelinCanadaPOLKMichelintoPolkCrossWalk();
+            //MichelinAnnualTester.MichelinCanadaPOLKTirePotentialSegmentChecker();
+            //MichelinAnnualTester.MichelinCanadaPOLKTirePotentialSegmentCheckerWINTER();
+            //MichelinAnnualTester.MichelinCanadaPOLKGroupCatChecker();
+
         }
-
-        
-
-
     }
 }
