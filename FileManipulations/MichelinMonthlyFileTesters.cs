@@ -17,6 +17,7 @@ namespace FileManipulations
         //      number
         //      date
         //      line length
+        //      " text qualifiers
         // add try catch blocks to each file test so that program will execute and log errors encountered instead of just executing
         //      add data logger to output log file for qa.
         // add correct column headers to refernce file?? 
