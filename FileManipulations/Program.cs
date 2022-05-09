@@ -20,10 +20,10 @@ namespace FileManipulations
 
 
             // Main Menu -----------------------------------------------
-            //FileFormatCheckerFixers.FileFormatCheckerFixer();
+            FileFormatCheckerFixers.FileFormatCheckerFixer();
 
             // Michelin Monthly File Tester -----------------------------
-            MichelinMonthlyFileTesters.MichelinMonthlyFileCleaner();
+            //MichelinMonthlyFileTesters.MichelinMonthlyFileCleaner();
 
 
             // Manual running File Processes -------------

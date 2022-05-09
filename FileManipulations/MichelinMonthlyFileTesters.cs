@@ -235,6 +235,9 @@ namespace FileManipulations
 
                     while ((line = readfile.ReadLine()) != null)
                     {
+                        //txtq replace
+                        line = line.Replace("\"", "");
+
                         recordcount++; //starts at 1.
 
                         string[] splitline = line.Split(del);
@@ -416,6 +419,9 @@ namespace FileManipulations
                     int recordcount = 0;
                     while ((line = readfile.ReadLine()) != null)
                     {
+                        //txtq replace
+                        line = line.Replace("\"", "");
+
                         recordcount++; //starts at 1.
 
                         string[] splitline = line.Split(del);
@@ -595,6 +601,9 @@ namespace FileManipulations
                     int recordcount = 0;
                     while ((line = readfile.ReadLine()) != null)
                     {
+                        //txtq replace
+                        line = line.Replace("\"", "");
+
                         recordcount++; //starts at 1.
 
                         string[] splitline = line.Split(del);
@@ -764,8 +773,11 @@ namespace FileManipulations
                     // read rest of file and check columns.
                     string line = string.Empty;
                     int recordcount = 0;
-                    while ((line = readfile.ReadLine()) != null)
+                    while ((line = readfile.ReadLine().) != null)
                     {
+                        //txtq replace
+                        line = line.Replace("\"", "");
+
                         recordcount++; //starts at 1.
 
                         string[] splitline = line.Split(del);
@@ -937,6 +949,9 @@ namespace FileManipulations
                     int recordcount = 0;
                     while ((line = readfile.ReadLine()) != null)
                     {
+                        //txtq replace
+                        line = line.Replace("\"", "");
+
                         recordcount++; //starts at 1.
                                        //line = line.Replace(",", string.Empty);
                         string[] splitline = line.Split(del);
@@ -1147,6 +1162,9 @@ namespace FileManipulations
                     int recordcount = 0;
                     while ((line = readfile.ReadLine()) != null)
                     {
+                        //txtq replace
+                        line = line.Replace("\"", "");
+
                         recordcount++; //starts at 1.
 
                         string[] splitline = line.Split(gapbatchdel);
@@ -1844,6 +1862,9 @@ namespace FileManipulations
                     int recordcount = 0;
                     while ((line = readfile.ReadLine()) != null)
                     {
+                        //txtq replace
+                        line = line.Replace("\"", "");
+
                         recordcount++; //starts at 1.
 
                         string[] splitline = line.Split(del);
@@ -2046,6 +2067,9 @@ namespace FileManipulations
                     int recordcount = 0;
                     while ((line = readfile.ReadLine()) != null)
                     {
+                        //txtq replace
+                        line = line.Replace("\"", "");
+
                         recordcount++; //starts at 1.
 
                         string[] splitline = line.Split(mspndel);
