@@ -17,7 +17,7 @@ namespace FileManipulations
         //      number
         //      date
         //      line length
-        //      " text qualifiers
+        //      done - " text qualifiers
         // add try catch blocks to each file test so that program will execute and log errors encountered instead of just executing
         //      add data logger to output log file for qa.
         // add correct column headers to refernce file?? 
@@ -355,7 +355,7 @@ namespace FileManipulations
             int blankvaluesadded = 0;
 
             //colum lists... they are in order of matching file -> table.
-            string[] expectedfilecolumns = { "Country", "Level 2 Sales Position ID", "Level 2 Sales Position Name", "Plan Channel Member Group ID", "Plan Channel Member Group DESC", "Bill To Customer ID", "Bill To Customer DESC", "Bill To Cust Chnl ID", "Bill To Cust Chnl DESC", "Ship To Number #", "Ship To Number DESC", "Ship To Cust Chnl ID", "Ship To Cust Chnl DESC", "Ship To Address 1", "Ship To City", "Ship To State/Province", "Ship To Zip/Postal", "Brand Group", "Year", "Month", "Ship To Phone Number", "NAR UNITS", "SELLOUT UNITS w/o BIB EXP for TCI" };
+            string[] expectedfilecolumns = { "Country", "Level 2 Sales Position ID", "Level 2 Sales Position Name", "Plan Channel Member Group ID", "Plan Channel Member Group DESC", "Bill To Customer ID", "Bill To Customer DESC", "Bill To Cust Chnl ID", "Bill To Cust Chnl DESC", "Ship To Number #", "Ship To Number DESC", "Ship To Cust Chnl ID", "Ship To Cust Chnl DESC", "Ship To Address 1", "Ship To City", "Ship To State/Province", "Ship To Zip/Postal", "Brand Group", "Year", "Month", "Ship To Phone Number", "NAR UNITS", "SELLOUT UNITS w/o BIB EXP for NTW" };
 
             string[] newcolumns = { "COUNTRY_DESC", "LEVEL_2_SALES_POSITION_ID", "LEVEL_2_SALES_POSITION_NAME", "PLAN_CHANNEL_MEMBER_GROUP_ID", "PLAN_CHANNEL_MEMBER_GROUP_DESC", "BILL_TO_CUSTOMER_ID", "BILL_TO_CUSTOMER_DESC", "BILL_TO_CUST_CHNL_ID", "BILL_TO_CUST_CHNL_DESC", "SHIP_TO_NUMBER_ID", "SHIP_TO_NUMBER_DESC", "SHIP_TO_CUST_CHNL_ID", "SHIP_TO_CUST_CHNL_DESC", "SHIP_TO_ADDRESS_1_ID", "SHIP_TO_CITY_ID", "SHIP_TO_STATE", "SHIP_TO_ZIP", "BRAND", "YEAR", "MONTH", "UNK1", "NAR_UNITS", "SELLOUT_UNITS" };
 
@@ -406,7 +406,7 @@ namespace FileManipulations
                     int shiptonumberid = FunctionTools.ColumnIndex(header, del, "Ship To Number #".ToUpper());
                     int shiptocustomerchnlid = FunctionTools.ColumnIndex(header, del, "Ship To Cust Chnl Id".ToUpper());
                     int narunits = FunctionTools.ColumnIndex(header, del, "Nar Units".ToUpper());
-                    int selloutunits = FunctionTools.ColumnIndex(header, del, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                    int selloutunits = FunctionTools.ColumnIndex(header, del, "SELLOUT UNITS w/o BIB EXP for NTW".ToUpper());
 
                     List<int> numbercolumnslist = new List<int> { billcustomerchannelid, billcustomerid, shiptocustomerchnlid, shiptonumberid, narunits, selloutunits };
 
@@ -773,7 +773,7 @@ namespace FileManipulations
                     // read rest of file and check columns.
                     string line = string.Empty;
                     int recordcount = 0;
-                    while ((line = readfile.ReadLine().) != null)
+                    while ((line = readfile.ReadLine()) != null)
                     {
                         //txtq replace
                         line = line.Replace("\"", "");
@@ -1254,7 +1254,7 @@ namespace FileManipulations
                     List<string> filecolumn = headersplit.ToList();
                     List<int> columnindexes = new List<int>();
 
-                    string[] expectedfilecolumns = { "Ship To Number", "MSPN", "Month", "NET SLS UNITS w TCI Bibx", "SELLOUT UNITS w/o BIB EXP for TCI", "NET INVC UNITS", "BIB EXPRESS TS UNITS Plus" };
+                    string[] expectedfilecolumns = { "Ship To Number", "MSPN", "Month", "NET SLS UNITS w NTW Bibx", "SELLOUT UNITS w/o BIB EXP for NTW", "NET INVC UNITS", "BIB EXPRESS TS UNITS Plus" };
                     string[] newcolumns = { "ST_CUST_NBR", "MSPN_NBR", "CALENDAR_CCYYMM_NBR", "NET_SALES_UNITS", "SELLOUT_UNITS", "NET_INVC_UNITS", "BIB_X_UNITS" };
 
                     gaptcarmonth = gaptcaryear + gaptcarmonth;
@@ -1303,8 +1303,8 @@ namespace FileManipulations
                     int monthcolumn = FunctionTools.ColumnIndex(header, gaptcardel, "Month");
 
                     //number test.
-                    int etslsunitscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "ET SLS UNITS w TCI Bibx".ToUpper());
-                    int selloutunitscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                    int etslsunitscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "ET SLS UNITS w NTW Bibx".ToUpper());
+                    int selloutunitscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "SELLOUT UNITS w/o BIB EXP for NTW".ToUpper());
                     int netinvcunitscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "NET INVC UNITS".ToUpper());
                     int bibexpresscolumn = FunctionTools.ColumnIndex(header, gaptcardel, "BIB EXPRESS TS UNITS".ToUpper());
 
@@ -1960,7 +1960,7 @@ namespace FileManipulations
         {
             Console.WriteLine();
             Console.WriteLine("************************************************************************************");
-            Console.WriteLine("Please enter the MSPN ST  AAD CA OMA For Zone LAM file.");
+            Console.WriteLine("Please enter the MSPN ST AAD CA OMA For Zone LAM file.");
             string mspnfile = FunctionTools.GetAFile();
 
             char mspndel = FunctionTools.GetDelimiter();
@@ -2215,7 +2215,7 @@ namespace FileManipulations
                     List<string> filecolumn = headersplit.ToList();
                     List<int> columnindexes = new List<int>();
 
-                    string[] expectedfilecolumns = { "Ship To Number", "MSPN", "Month", "NET SLS UNITS w TCI Bibx", "SELLOUT UNITS w/o BIB EXP for TCI", "NET INVC UNITS", "BIB EXPRESS TS UNITS Plus" };
+                    string[] expectedfilecolumns = { "Ship To Number", "MSPN", "Month", "NET SLS UNITS w NTW Bibx", "SELLOUT UNITS w/o BIB EXP for NTW", "NET INVC UNITS", "BIB EXPRESS TS UNITS Plus" };
                     string[] newcolumns = { "ST_CUST_NBR", "MSPN_NBR", "CALENDAR_CCYYMM_NBR", "NET_SALES_UNITS", "SELLOUT_UNITS", "NET_INVC_UNITS", "BIB_X_UNITS" }; //columns match for now.
 
                     //yyyyMM
@@ -2266,8 +2266,8 @@ namespace FileManipulations
                     int monthcolumn = FunctionTools.ColumnIndex(header, gapdel, "Month");
 
                     //numbertests.
-                    int number1 = FunctionTools.ColumnIndex(header, gapdel, "NET SLS UNITS w TCI Bibx".ToUpper());
-                    int number2 = FunctionTools.ColumnIndex(header, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                    int number1 = FunctionTools.ColumnIndex(header, gapdel, "NET SLS UNITS w NTW Bibx".ToUpper());
+                    int number2 = FunctionTools.ColumnIndex(header, gapdel, "SELLOUT UNITS w/o BIB EXP for NTW".ToUpper());
                     int number3 = FunctionTools.ColumnIndex(header, gapdel, "NET INVC UNITS".ToUpper());
                     int number4 = FunctionTools.ColumnIndex(header, gapdel, "BIB EXPRESS TS UNITS Plus".ToUpper());
                     List<int> numbercolumnslist = new List<int> { number1, number2, number3, number4 };
@@ -2600,7 +2600,7 @@ namespace FileManipulations
                 {
                     using (StreamWriter writegap2 = new StreamWriter(gapoutfile2))
                     {
-                        string[] expectedfilecolumns = { "Ship To Number", "MSPN", "Month", "NET SLS UNITS w TCI Bibx", "SELLOUT UNITS w/o BIB EXP for TCI", "NET INVC UNITS", "BIB EXPRESS TS UNITS Plus" };
+                        string[] expectedfilecolumns = { "Ship To Number", "MSPN", "Month", "NET SLS UNITS w NTW Bibx", "SELLOUT UNITS w/o BIB EXP for NTW", "NET INVC UNITS", "BIB EXPRESS TS UNITS Plus" };
                         string[] newcolumns = { "ST_CUST_NBR", "MSPN_NBR", "CALENDAR_CCYYMM_NBR", "NET_SALES_UNITS", "SELLOUT_UNITS", "NET_INVC_UNITS", "BIB_X_UNITS" };
 
                         //List<int> commacleaner = new List<int>{}
@@ -2659,8 +2659,8 @@ namespace FileManipulations
                         int Month = FunctionTools.ColumnIndex(gapheader, gapdel, "Month".ToUpper());
 
                         //numbertests.
-                        int etslsunits = FunctionTools.ColumnIndex(gapheader, gapdel, "ET SLS UNITS w TCI Bibx".ToUpper());
-                        int selloutunits = FunctionTools.ColumnIndex(gapheader, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                        int etslsunits = FunctionTools.ColumnIndex(gapheader, gapdel, "ET SLS UNITS w NTW Bibx".ToUpper());
+                        int selloutunits = FunctionTools.ColumnIndex(gapheader, gapdel, "SELLOUT UNITS w/o BIB EXP for NTW".ToUpper());
                         int netinvcunits = FunctionTools.ColumnIndex(gapheader, gapdel, "NET INVC UNITS".ToUpper());
                         int bibexpress = FunctionTools.ColumnIndex(gapheader, gapdel, "BIB EXPRESS TS UNITS".ToUpper());
 
@@ -3255,7 +3255,7 @@ namespace FileManipulations
                     using (StreamWriter gapbadfile = new StreamWriter(gapoutfile2))
                     {
 
-                        string[] expectedcolumns = { "Ship To Number", "MSPN", "Month", "NET SLS UNITS w TCI Bibx", "SELLOUT UNITS w/o BIB EXP for TCI", "NET INVC UNITS", "BIB EXPRESS TS UNITS Plus" };
+                        string[] expectedcolumns = { "Ship To Number", "MSPN", "Month", "NET SLS UNITS w NTW Bibx", "SELLOUT UNITS w/o BIB EXP for NTW", "NET INVC UNITS", "BIB EXPRESS TS UNITS Plus" };
                         string[] newcolumnnames = { "ST_CUST_NBR", "MSPN_NBR", "CALENDAR_CCYYMM_NBR", "NET_SALES_UNITS", "SELLOUT_UNITS", "NET_INVC_UNITS", "BIB_X_UNITS" }; //columns match for now.
 
                         //get header.
@@ -3310,8 +3310,8 @@ namespace FileManipulations
                         int month = FunctionTools.ColumnIndex(gapheader, gapdel, "Month");
 
                         //numbertests.
-                        int number1 = FunctionTools.ColumnIndex(gapheader, gapdel, "NET SLS UNITS w TCI Bibx".ToUpper());
-                        int number2 = FunctionTools.ColumnIndex(gapheader, gapdel, "SELLOUT UNITS w/o BIB EXP for TCI".ToUpper());
+                        int number1 = FunctionTools.ColumnIndex(gapheader, gapdel, "NET SLS UNITS w NTW Bibx".ToUpper());
+                        int number2 = FunctionTools.ColumnIndex(gapheader, gapdel, "SELLOUT UNITS w/o BIB EXP for NTW".ToUpper());
                         int number3 = FunctionTools.ColumnIndex(gapheader, gapdel, "NET INVC UNITS".ToUpper());
                         int number4 = FunctionTools.ColumnIndex(gapheader, gapdel, "BIB EXPRESS TS UNITS Plus".ToUpper());
                         List<int> columnslist = new List<int> { number1, number2, number3, number4 };
